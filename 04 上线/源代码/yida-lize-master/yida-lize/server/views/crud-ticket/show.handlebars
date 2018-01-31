@@ -1,0 +1,361 @@
+{{#if (isAllowed @root.session.permissions data.ticket_template._id 'show')}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    {{data.ticket_template.title}}详细
+    <small>{{data.ticket_template.title}}详细信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">{{data.ticket_template.title}}详细</li>
+  </ol>
+</section>
+<section class="content">
+  {{#if message}}
+  <div class="alert alert-info alert-dismissable" style="width:600px" >
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{{message}}}
+  </div>
+  {{/if}}
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (isAllowed @root.session.permissions data.ticket_template._id 'edit')}}
+        <a href="/crud/{{data.ticket_template._id}}/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions data.ticket_template._id 'delete')}}
+        <a href="#" data-href="/crud/{{data.ticket_template._id}}/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">基本信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{#if data.company}}
+          <p><b>关联企业:</b>
+            <a href="/crud/company/{{data.company._id}}">
+              {{data.company.company_name}}
+            </a>
+          </p>
+          {{/if}}
+            {{#if data.from_user}}
+          <p><b>发起人:</b>
+            <a href="/crud/user/{{data.from_user._id}}">
+              <img src="{{avatar @root.config.file_url data.from_user.avatar}}" class="img-circle size25">
+              {{data.from_user.fullname}}
+            </a>
+            {{/if}}
+            {{#if data.from_admin}}
+            <a href="/crud/admin/{{data.from_admin._id}}">
+              <img src="{{avatar @root.config.file_url data.from_admin.avatar}}" class="img-circle size25">
+              {{data.from_admin.fullname}}
+            </a>
+          </p>
+            {{/if}}
+          <p><b>负责人:</b>
+            {{#each data.to }}
+            <a href="/crud/admin/{{_id}}">
+              <img src="{{avatar @root.config.file_url avatar}}" class="img-circle size25">
+              {{fullname}}
+            </a>
+            {{/each}}
+          </p>
+          <p><b>类型:</b>
+            {{data.ticket_template.title}}
+          </p>
+          <p><b>进度:</b>
+            {{{data.progress}}}
+            {{!--
+            {{#if (eq data.progress '已受理')}}
+            {{#if (isAllowed @root.session.permissions data.ticket_template._id 'edit')}}
+            <a href="#" class="btn btn-xs btn-success start_process_ticket" data-href="/crud/post_start_process_ticket?ticket_id={{data._id}}">
+              <i class="fa fa-play"></i>
+              确认受理
+            </a>
+            {{/if}}
+            {{/if}}
+            --}}
+          </p>
+          <p><b>内容:</b>
+            {{{data.content}}}
+          </p>
+          <p><b>用户评论:</b>
+            {{data.user_comment}}
+          </p>
+          <p><b>用户确认:</b>
+            {{#if data.user_closed}}已确认{{else}}未确认{{/if}}
+          </p>
+        </div>
+      </div>
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">回复一览</h3>
+        </div>
+        <div class="box-body chat" id="chat-box" style="overflow: auto; width: auto; height: auto;">
+          {{#each data.comments }}
+          <div class="item">
+            {{#if this.admin.avatar}}
+            <img src="{{avatar @root.config.file_url this.admin.avatar}}" alt="user image" class="online">
+            {{else}}
+            <img src="/avatars/avatar.svg" alt="user image" class="online">
+            {{/if}}
+            <p class="message">
+              <a href="/crud/admin/{{this.admin._id}}" class="name">
+                <small class="text-muted pull-right">
+                  <i class="fa fa-clock-o"></i>
+                  {{ymd this.create_date 'YYYY-MM-DD HH:mm:ss'}}
+                </small>
+                {{this.admin.fullname}}
+              </a>
+              {{this.content}}
+            </p>
+          </div>
+          {{/each}}
+        </div>
+        <div class="box-footer">
+          <div class="input-group">
+            <input type="text" class="form-control" id="content" placeholder="请输入回复内容" required/>
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-success btn-flat add-comment">添加回复</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{#if data.ticket_template.form_file}}
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">工作推进方法说明</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{> ticket_indicate data=data ticket_template_title=data.ticket_template.title  ticket_indicates=ticket_indicates }}
+        </div>
+      </div>
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">表单:{{data.ticket_template.title}}</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <form  id="frm_ticket_form_data" action="/crud/post_ticket_form_data" method="post">
+            <input type="hidden" name="_id" value="{{data._id}}"/>
+            <div class="box-body">
+              {{> (form_file) data=data }}
+            </div>
+            {{#if (ne data.progress '处理完毕')}}
+            <div>
+              <input type="hidden" name="goto_nextstep" id="hdn_goto_nextstep" value="{{nextStep data.progress data.ticket_template.progress_extensions}}" />
+              当前状态：<b>{{data.progress}}</b>，下一步：<b>{{nextStep data.progress data.ticket_template.progress_extensions}}</b>
+            </div>
+            <div class="box-footer">
+              <button type="button" class="btn btn-default btn_save_form_data" nextstep="">暂时保存</button>
+              {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (canNextStep data.progress data.ticket_template.progress_extensions @root.session.user.acl_roles))}}
+              <!--维修票，当状态为指派中时候，只有被指派的人才能进行下一步-->
+              {{#if (and (eq data.ticket_template._id 'property_repair') (and (ne data.form_data.property_repair_admin @root.session.user._id) (eq data.progress '任务接单')))}}
+              {{else}}
+              <button type="submit" class="btn btn-primary">推进到下一步</button>
+              {{/if}}
+              {{/if}}
+            </div>
+            {{else}}
+            当前状态：<b>{{data.progress}}</b>
+            {{#if data.ticket_template.excel_file}}
+            <a href="#" data-href="/crud/ticket_export_excel?ticket_id={{data._id}}" class="btn btn-sm btn-info export_excel">
+              <i class="fa fa-file-excel-o"></i>
+              导出
+            </a>
+            {{/if}}
+            {{/if}}
+          </form>
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  {{#if (or (about_eq data.from_admin._id @root.session.user._id) (about_exists (lodash_map data.to '_id') @root.session.user._id))}}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-solid box-default collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title">事件</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{> list_events list=data.events}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.section -->
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   // Delete ticket button
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定要删除此数据吗?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+         window.location.href = '/crud/{{data.ticket_template._id}}s';
+        });
+      },
+  });
+    var uri_comment;
+    $('.delete_comment').click(function(){
+      uri_comment = $(this).attr('data-href');
+    });
+    $('.delete_comment').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定删除?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri_comment, function(response) {
+         if (response.success)
+           window.location.href = '/crud/{{data.ticket_template._id}}/{{data._id}}';
+         else
+           alert(response.msg);
+        });
+      },
+  });
+
+   $('.add-comment').click(function(event) {
+     var admin_id = '{{@root.session.user._id}}';
+     var content = $('#content').val();
+     $.ajax({
+       type: 'POST',
+       dataType: 'json',
+       url: '/crud/post_add_ticket_comment?ticket_id={{data._id}}',
+       data: {
+         admin_id: admin_id,
+         content: content
+       }
+     }).then(function(data) {
+       if (data.success) {
+         location.reload();
+       } else {
+         alert(data.msg);
+       }
+     });
+   });
+
+   $('.add-company-user').click(function(event) {
+     var ccs = $('#admins').val();
+     $.ajax({
+       type: 'POST',
+       dataType: 'json',
+       url: '/crud/post_add_ticket_cc?ticket_id={{data._id}}',
+       data: {
+         ccs: ccs
+       }
+     }).then(function(data) {
+       if (data.success) {
+         location.reload();
+       } else {
+         alert(data.msg);
+       }
+     });
+   });
+
+   // send ticket
+   $('.send_ticket').click(function(event) {
+     event.preventDefault();
+
+     var uri = $(this).attr('data-href');
+
+     $.post(uri, function(res) {
+       if (res.success)
+         alert('通知已发送');
+       else
+         alert(res.msg);
+     });
+   });
+
+   // send ticket
+   $('.start_process_ticket').click(function(event) {
+     event.preventDefault();
+
+     var uri = $(this).attr('data-href');
+
+     $.post(uri, function(res) {
+       if (res.success) {
+         alert('此工作票已经开始受理');
+         location.reload();
+       } else
+       alert(res.msg);
+     });
+   });
+
+   //暂存
+   $('.btn_save_form_data').click(function(event) {
+     event.preventDefault();
+     var nextstep = $(this).attr('nextstep');
+
+     $('#hdn_goto_nextstep').val(nextstep);
+     $('#frm_ticket_form_data').submit();
+   });
+
+   //export
+   $('.btn-info.export_excel').click(function(event) {
+     event.preventDefault();
+     var uri = $(this).attr('data-href');
+     $.get(uri, function(res) {
+       if (res.success) {
+         //alert(res.data);
+         window.open('{{@root.config.file_url}}/excel/' + res.data, '_blank');
+       } else {
+         alert(res.msg);
+       }
+     });
+   });
+
+   {{> select2_script_admin}}
+ });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

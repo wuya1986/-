@@ -1,0 +1,184 @@
+{{#if (isAllowed @root.session.permissions 'user' 'edit')}}
+<section class="content-header">
+  <h1>
+    编辑企业员工信息
+    <small>编辑企业员工信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'user.list'}}}">List</a></li>
+    <li class="active">编辑企业员工信息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">企业员工信息</h3>
+        </div>
+        <form action="/crud/user/{{data._id}}?_method=put" method="post" id="form">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">姓名<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="user[fullname]" value="{{data.fullname}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">性别<span style="color:#F00">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" id="sex" name="user[sex]" required />
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">电话号码<span style="color:#F00">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="phone" pattern="^1\d{10}$" oninput="setCustomValidity('')" maxlength="11" name="user[mobile_no]" value="{{data.mobile_no}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">身份证号码<span style="color:#F00">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" pattern="^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$" id="idCard" oninput="setCustomValidity('')" name="user[id_card]" value="{{data.id_card}}" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">一卡通号码</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="user[e_card]" value="{{data.e_card}}" />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">车牌号码</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="vpl" oninput="setCustomValidity('')" name="user[vpl_number]" value="{{data.vpl_number}}" />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">身份标识<span style="color:#F00">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="user[role]" id="role" required>
+                  <option value="园区客户">园区客户</option>
+                  <option value="访客">访客</option>
+                  <option value="授权人">授权人</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">所属企业</label>
+              <div class="col-sm-9">
+                <select class="form-control js-data-company-ajax" name="user[company]" id="company" data-value="{{data.company._id}}" required="required" >
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">无效/有效<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="user[delete_flag]" id="delete_flag" required>
+                  <option value="false">有效</option>
+                  <option value="true">无效</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">备注</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="user[memo]" rows="6">{{data.memo}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" onclick="getVerification()" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '/crud/user/{{data._id}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+ $(function () {
+   $('#delete_flag').select2().val("{{data.delete_flag}}").trigger('change');
+   $('.input-group.date').datepicker({
+     language: "zh-CN",
+     format: "yyyy-mm-dd"
+   });
+
+   $("#sex").val("{{data.sex}}");
+   $("#role").val("{{data.role}}");
+   {{> select2_script_company}}
+   {{#if data.company}}
+   var newOption = new Option('{{data.company.company_name}}', '{{data.company._id}}', false, false);
+   $('#company').append(newOption).val('{{data.company._id}}').trigger('change');
+   {{/if}}
+
+   $('#role').change(function(){
+     if ($('#role').val() == '访客') {
+       $('#company').val(null).trigger("change");
+     }
+   });
+   $('form').on('submit', function () {
+        $("#i_save").addClass("fa-spin");
+    });
+  $('input').blur(function () {
+    var phone = $('#phone').val();
+    var idCard = $('#idCard').val();
+    var eCard = $('#eCard').val();
+    var vpl = $('#vpl').val();
+    var userID = '{{data._id}}';
+    if(phone){
+      // UniquenessCheck
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        url: '/crud/post_uniqueness_check',
+        data: {
+          mobile_no: phone,
+          user_id: userID,
+          id_card: idCard,
+          e_card: eCard,
+          vpl_number: vpl
+        }
+      }).then(function(data) {
+        if (data.phone > 0) {
+          $('#phone').each(function() {
+              this.setCustomValidity('手机号已被使用，请重新输入。')
+          });
+        } else if (data.idCard > 0) {
+          $('#idCard').each(function() {
+              this.setCustomValidity('身份证号已被使用，请重新输入。')
+          });
+        } else if (data.eCard > 0) {
+          $('#eCard').each(function() {
+              this.setCustomValidity('一卡通号已被使用，请重新输入。')
+          });
+        } else if (data.vpl > 0) {
+          $('#vpl').each(function() {
+             this.setCustomValidity('车牌号已被使用，请重新输入。')
+          });
+        }
+      });
+    }
+  });
+ });
+  function getVerification(){
+  if($('#role').val() == '访客'){
+    $('#company').removeAttr("required");
+    }
+  }
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

@@ -1,0 +1,177 @@
+{{#if (isAllowed @root.session.permissions 'message' 'show')}}
+<section class="content-header">
+  <h1>
+    {{#if ticket_template}}
+    {{ticket_template.title}}
+    {{/if}}
+    消息
+    <small>显示消息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'message.list'}}}">List</a></li>
+    <li class="active">消息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- DIRECT CHAT DANGER -->
+      <div class="box box-danger direct-chat direct-chat-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">
+            {{#if to_admin}}
+            管理员
+            <a href="/crud/admin/{{to_admin._id}}">
+              <img src="{{avatar @root.config.file_url to_admin.avatar}}" class="img-circle size25">
+              {{to_admin.fullname}}
+            </a>
+            {{/if}}
+            {{#if to_user}}
+            用户
+            <a href="/crud/user/{{to_user._id}}">
+              <img src="{{avatar @root.config.file_url to_user.avatar}}" class="img-circle size25">
+              {{to_user.fullname}}
+            </a>
+            {{/if}}
+            与
+            {{#if from_admin}}
+            管理员
+            <a href="/crud/admin/{{from_admin._id}}">
+              <img src="{{avatar @root.config.file_url from_admin.avatar}}" class="img-circle size25">
+              {{from_admin.fullname}}
+            </a>
+            {{/if}}
+            {{#if from_user}}
+            用户
+            <a href="/crud/user/{{from_user._id}}">
+              <img src="{{avatar @root.config.file_url from_user.avatar}}" class="img-circle size25">
+              {{from_user.fullname}}
+            </a>
+            {{/if}}
+            之间的消息
+          </h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <!-- Conversations are loaded here -->
+          <div class="direct-chat-messages" style="height: 650px;">
+            {{#each messages }}
+            <!-- Message to the right -->
+            <div class="direct-chat-msg{{#if this.right}} right{{/if}}">
+              <div class="direct-chat-info clearfix">
+                <span class="direct-chat-name pull-{{#if this.right}}right{{else}}left{{/if}}">
+                  {{this.from_admin.fullname}}
+                </span>
+                <span class="direct-chat-timestamp pull-{{#if this.right}}left{{else}}right{{/if}}">{{ymd create_date 'YYYY-MM-DD HH:mm:ss'}}</span>
+              </div>
+              <!-- /.direct-chat-info -->
+              <img class="direct-chat-img" src="{{#if this.from_user.avatar}}{{avatar @root.config.file_url this.from_user.avatar}}{{/if}}{{#if this.from_admin.avatar}}{{avatar @root.config.file_url this.from_admin.avatar}}{{/if}}"><!-- /.direct-chat-img -->
+              <div class="direct-chat-text" style="width: 300px;{{#if this.right}}float:right{{/if}}">
+                {{this.content}}
+                {{#if this.extensions.staff_url}}
+                <a href="{{this.extensions.staff_url}}">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                </a>
+                {{else}}
+                {{#if this.business_type}}
+                <a href="/crud/{{this.business_type}}s">
+                  <i class="fa fa-link" aria-hidden="true"></i>
+                </a>
+                {{/if}}
+                {{/if}}
+              </div>
+              <!-- /.direct-chat-text -->
+            </div>
+            {{/each}}
+            <!-- /.direct-chat-msg -->
+          </div>
+          <!--/.direct-chat-messages-->
+        </div>
+        <!-- /.box-body -->
+        {{#if (or (about_eq from_admin._id @root.session.user._id) (about_eq to_admin._id @root.session.user._id))}}
+        <div class="form-group form">
+          <div class="col-sm-12">
+            <textarea class="form-control textarea" rows="6" placeholder="填写回复内容，发送给对方" id="my_content"></textarea>
+            <button type="button" class="btn btn-danger btn-flat" id="send_message">发送消息</button>
+          </div>
+        </div>
+        {{/if}}
+        <!-- /.box-footer-->
+      </div>
+      <!--/.direct-chat -->
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定删除?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(res) {
+         if (res.success)
+           window.location.href = '/crud/messages';
+         else
+           location.reload();
+        });
+      },
+  });
+   // send message
+   $('#send_message').click(function(event) {
+     event.preventDefault();
+     var content = $('#my_content').val();
+     if (content.length === 0) {
+       return;
+     }
+     $.ajax({
+       type: 'POST',
+       dataType: 'json',
+       url: '/crud/post_send_message',
+       data: {
+         {{#if ticket_template}}
+         business_type: '{{ticket_template._id}}',
+         {{/if}}
+         {{#if to_user._id}}
+         to_user: '{{to_user._id}}',
+         {{else}}
+         {{#if from_user._id}}
+         to_user: '{{from_user._id}}',
+         {{else}}
+         {{#if to_admin._id}}to_admin: '{{to_admin._id}}',{{/if}}
+         {{#if from_admin._id}}to_admin: '{{from_admin._id}}',{{/if}}
+         {{/if}}
+         {{/if}}
+         content: content
+       }
+     }).then(function(res) {
+       if (res.success) {
+         location.reload();
+       } else {
+         alert(res.msg);
+       }
+     });
+   });
+
+   var objDiv = $('.direct-chat-messages')[0];
+   objDiv.scrollTop = objDiv.scrollHeight;
+ });
+</script>
+{{/extend}}
+
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

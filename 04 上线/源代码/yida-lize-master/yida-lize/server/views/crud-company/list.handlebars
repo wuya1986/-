@@ -1,0 +1,143 @@
+{{#if (isAllowed @root.session.permissions 'company' 'list')}}
+<section class="content-header">
+  <h1>
+    企业一览
+    <small>所有企业一览</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">List</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box">
+        <div class="box-header search-area">
+          {{#if (isAllowed @root.session.permissions 'company' 'add')}}
+          <a href="/crud/company/new" class="btn btn-xs btn-success">
+            <i class="fa fa-pencil"></i>
+            新建
+          </a>
+          {{/if}}
+          <div class="box-tools">
+            <form class="input-group input-group-sm" style="width: 150px;">
+              <input type="hidden" name="page" id="page" value="{{req.query.page}}" />
+              <input type="text" id="keyword" name="keyword" class="form-control pull-right" placeholder="Search" value="{{req.query.keyword}}"/>
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default search"><i class="fa fa-search"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tr>
+              <th>企业名称</th>
+              <th>法人代表</th>
+              <th>成立日期</th>
+              <th>操作</th>
+            </tr>
+            {{#each list }}
+            <tr>
+              <td><a href="/crud/company/{{this._id}}">
+                {{#if this.delete_flag}}
+                <s>
+                  {{/if}}
+                  {{this.company_name}}
+                  {{#if this.delete_flag}}
+                </s>
+                {{/if}}
+              </a></td>
+              <td>{{this.lega_person}}</td>
+              <td> {{#if this.build_date}}{{ymd this.build_date 'YYYY-MM-DD'}}{{/if}}</td>
+              <td>
+                {{#if (isAllowed @root.session.permissions 'company' 'edit')}}
+                <a href="/crud/company/{{this._id}}/edit" class="btn btn-xs btn-success">
+                  <i class="fa fa-pencil"></i>
+                  修改
+                </a>
+                {{/if}}
+                {{#if (isAllowed @root.session.permissions 'company' 'delete')}}
+                <a href="#" class="btn btn-xs btn-danger" data-href="/crud/company/{{this._id}}?_method=delete">
+                  <i class="fa fa-remove"></i>
+                  删除
+                </a>
+                {{/if}}
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+        <div class="box-footer clearfix">
+          {{{paginationView pagination}}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+  <script>
+    (function($) {
+    var uri;
+    $('.btn-danger').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger').confirmation({
+      animation: true,
+      placement: "left",
+      title: "确定要删除此数据吗?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+            window.location.href = '/crud/companys';
+        });
+      },
+  });
+    })(jQuery)
+      function search() {
+        var page = $('#page').val();
+        var keyword = $('#keyword').val();
+
+        var queryString = '/crud/companys?a=1';
+        if (page) {
+          if (queryString.indexOf('?') >= 0) {
+            queryString += '&page=' + page;
+          } else {
+            queryString += '?page=' + page;
+          }
+        }
+        if (keyword) {
+          if (queryString.indexOf('?') >= 0) {
+            queryString += '&keyword=' + keyword;
+          } else {
+            queryString += '?keyword=' + keyword;
+          }
+        }
+
+        window.location.href = queryString;
+      }
+      $('.pageList').click(function(){
+        var $this = $(this);
+        var id = $this.data('id');
+        $('#page').val(id);
+        search();
+      });
+      $('.search').click(function(){
+        $('#page').val(1);
+        search();
+      });
+  </script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

@@ -1,0 +1,48 @@
+//users
+function formatUser (user) {
+  if (user.loading) return user.text;
+  var markup = "<div class='select2-result-user-title'>" + user.fullname + "</div>";
+  return markup;
+}
+
+function formatUserSelection (user) {
+  if(user.id=="") return "请输入员工姓名";
+  return "<div class='select2-result-user-title'>" + user.text + "</div>";
+}
+
+$(".js-data-user-ajax").select2({
+  ajax: {
+    url: '/utils/users_json',
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        keyword: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      var pagination = data.pagination;
+      var data = $.map(data.models, function (obj) {
+        obj.id = obj.id || obj._id;
+        obj.text = obj.text || obj.fullname;
+
+        return obj;
+      });
+      params.page = params.page || 1;
+
+      return {
+        results: data,
+        pagination: {
+          more: (params.page * 30) < pagination.total_count
+        }
+      };
+    },
+    cache: true
+  },
+  placeholder: "",
+  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+  minimumInputLength: 1,
+  templateResult: formatUser, // omitted for brevity, see the source of this page
+  templateSelection: formatUserSelection // omitted for brevity, see the source of this page
+});

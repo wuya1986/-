@@ -1,0 +1,1295 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">类别</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="office_handover_type" name="form_data[office_handover_type]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}>
+      <option value="入">入</option>
+      <option value="退">退</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">结构装饰</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">门、门框、门锁、合叶、把手等</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_doors_unit]" value="{{data.form_data.office_handover_doors_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_doors_number]" value="{{data.form_data.office_handover_doors_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_doors_compliance" name="form_data[office_handover_doors_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_doors_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_doors_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">窗户、窗框、玻璃、窗户把手等</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_window_unit]" value="{{data.form_data.office_handover_window_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_window_number]" value="{{data.form_data.office_handover_window_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_window_compliance" name="form_data[office_handover_window_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_window_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_window_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">窗台台面</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_windowsill_unit]" value="{{data.form_data.office_handover_windowsill_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_windowsill_number]" value="{{data.form_data.office_handover_windowsill_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_windowsill_compliance" name="form_data[office_handover_windowsill_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_windowsill_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_windowsill_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">承重柱、墙</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_bearing_wall_unit]" value="{{data.form_data.office_handover_bearing_wall_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_bearing_wall_number]" value="{{data.form_data.office_handover_bearing_wall_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_bearing_wall_compliance" name="form_data[office_handover_bearing_wall_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_bearing_wall_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_bearing_wall_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">墙面</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_wall_unit]" value="{{data.form_data.office_handover_wall_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_wall_number]" value="{{data.form_data.office_handover_wall_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_wall_compliance" name="form_data[office_handover_wall_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_wall_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_wall_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">天花</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_ceiling_unit]" value="{{data.form_data.office_handover_ceiling_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_ceiling_number]" value="{{data.form_data.office_handover_ceiling_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_ceiling_compliance" name="form_data[office_handover_ceiling_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_ceiling_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_ceiling_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">地面</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_ground_unit]" value="{{data.form_data.office_handover_ground_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_ground_number]" value="{{data.form_data.office_handover_ground_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_ground_compliance" name="form_data[office_handover_ground_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_ground_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_ground_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">护栏</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_fence_unit]" value="{{data.form_data.office_handover_fence_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_fence_number]" value="{{data.form_data.office_handover_fence_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_fence_compliance" name="form_data[office_handover_fence_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_fence_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_fence_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">暖通</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">送风口</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_outlet_unit]" value="{{data.form_data.office_handover_outlet_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_outlet_number]" value="{{data.form_data.office_handover_outlet_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_outlet_compliance" name="form_data[office_handover_outlet_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_outlet_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_outlet_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">回风口</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_inlet_unit]" value="{{data.form_data.office_handover_inlet_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_inlet_number]" value="{{data.form_data.office_handover_inlet_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_inlet_compliance" name="form_data[office_handover_inlet_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_inlet_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_inlet_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">风机盘管及恒温控制器</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_controller_unit]" value="{{data.form_data.office_handover_controller_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_controller_number]" value="{{data.form_data.office_handover_controller_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_controller_compliance" name="form_data[office_handover_controller_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_controller_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_controller_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">消防</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">消防喷淋头</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_nozzle_unit]" value="{{data.form_data.office_handover_nozzle_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_nozzle_number]" value="{{data.form_data.office_handover_nozzle_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_nozzle_compliance" name="form_data[office_handover_nozzle_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_nozzle_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_nozzle_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">室内消火栓</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_hydrant_unit]" value="{{data.form_data.office_handover_hydrant_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_hydrant_number]" value="{{data.form_data.office_handover_hydrant_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_hydrant_compliance" name="form_data[office_handover_hydrant_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_hydrant_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_hydrant_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">消防广播</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_radio_unit]" value="{{data.form_data.office_handover_radio_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_radio_number]" value="{{data.form_data.office_handover_radio_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_radio_compliance" name="form_data[office_handover_radio_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_radio_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_radio_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">烟感、温感等感应器</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_sensor_unit]" value="{{data.form_data.office_handover_sensor_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_sensor_number]" value="{{data.form_data.office_handover_sensor_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_sensor_compliance" name="form_data[office_handover_sensor_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_sensor_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_sensor_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">排烟风口、正压送风口及阀</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_exhaust_unit]" value="{{data.form_data.office_handover_exhaust_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_exhaust_number]" value="{{data.form_data.office_handover_exhaust_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_exhaust_compliance" name="form_data[office_handover_exhaust_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_exhaust_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_exhaust_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安全出口指示灯</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_indicator_unit]" value="{{data.form_data.office_handover_indicator_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_indicator_number]" value="{{data.form_data.office_handover_indicator_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_indicator_compliance" name="form_data[office_handover_indicator_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_indicator_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_indicator_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">电气</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">室内灯具</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_lamp_unit]" value="{{data.form_data.office_handover_lamp_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_lamp_number]" value="{{data.form_data.office_handover_lamp_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_lamp_compliance" name="form_data[office_handover_lamp_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_lamp_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_lamp_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">照明开关</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_switch_unit]" value="{{data.form_data.office_handover_switch_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_switch_number]" value="{{data.form_data.office_handover_switch_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_switch_compliance" name="form_data[office_handover_switch_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_switch_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_switch_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">插座</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_socket_unit]" value="{{data.form_data.office_handover_socket_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_socket_number]" value="{{data.form_data.office_handover_socket_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_socket_compliance" name="form_data[office_handover_socket_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_socket_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_socket_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">电力配电箱</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_distribution_unit]" value="{{data.form_data.office_handover_distribution_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_distribution_number]" value="{{data.form_data.office_handover_distribution_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_distribution_compliance" name="form_data[office_handover_distribution_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_distribution_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_distribution_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">电话、网络接线箱</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_junction_unit]" value="{{data.form_data.office_handover_junction_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_junction_number]" value="{{data.form_data.office_handover_junction_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_junction_compliance" name="form_data[office_handover_junction_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_junction_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_junction_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">其他</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">水表号码</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_water_meter_unit]" value="{{data.form_data.office_handover_water_meter_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_water_meter_number]" value="{{data.form_data.office_handover_water_meter_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_water_meter_compliance" name="form_data[office_handover_water_meter_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_water_meter_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_water_meter_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">电表号码</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_ammeter_unit]" value="{{data.form_data.office_handover_ammeter_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_ammeter_number]" value="{{data.form_data.office_handover_ammeter_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_ammeter_compliance" name="form_data[office_handover_ammeter_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_ammeter_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_ammeter_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">钥匙</label>
+  <div class="col-sm-9">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">单位</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" name="form_data[office_handover_key_unit]" value="{{data.form_data.office_handover_key_unit}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">数量</label>
+      <div class="col-sm-8">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[office_handover_key_number]" value="{{data.form_data.office_handover_key_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">合格情况</label>
+      <div class="col-sm-8">
+        <select class="form-control" id="office_handover_key_compliance" name="form_data[office_handover_key_compliance]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+          <option value="不合格">不合格</option>
+          <option value="合格">合格</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">备注</label>
+      <div class="col-sm-8">
+        <textarea class="form-control" name="form_data[office_handover_key_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理录入') (eq data.progress '安保经理录入')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>{{data.form_data.office_handover_key_memo}}</textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">备注</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[office_handover_memo]">{{data.form_data.office_handover_memo}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[office_handover_repair_manager]" {{#if (and (eq data.progress '工程经理录入') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} value="{{#if data.form_data.office_handover_repair_manager}}{{data.form_data.office_handover_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.office_handover_repair_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[office_handover_security_manager]" {{#if (and (eq data.progress '安保经理录入') (intersection @root.session.user.acl_roles '["security_manager"]'))}} value="{{#if data.form_data.office_handover_security_manager}}{{data.form_data.office_handover_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.office_handover_security_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">运营服务部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[office_handover_building_manager]" {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}} value="{{#if data.form_data.office_handover_building_manager}}{{data.form_data.office_handover_building_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.office_handover_building_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $("#office_handover_doors_compliance").val('{{data.form_data.office_handover_doors_compliance}}');
+   $("#office_handover_window_compliance").val('{{data.form_data.office_handover_window_compliance}}');
+   $("#office_handover_windowsill_compliance").val('{{data.form_data.office_handover_windowsill_compliance}}');
+   $("#office_handover_bearing_wall_compliance").val('{{data.form_data.office_handover_bearing_wall_compliance}}');
+   $("#office_handover_wall_compliance").val('{{data.form_data.office_handover_wall_compliance}}');
+   $("#office_handover_ceiling_compliance").val('{{data.form_data.office_handover_ceiling_compliance}}');
+   $("#office_handover_ground_compliance").val('{{data.form_data.office_handover_ground_compliance}}');
+   $("#office_handover_fence_compliance").val('{{data.form_data.office_handover_fence_compliance}}');
+   $("#office_handover_outlet_compliance").val('{{data.form_data.office_handover_outlet_compliance}}');
+   $("#office_handover_inlet_compliance").val('{{data.form_data.office_handover_inlet_compliance}}');
+   $("#office_handover_controller_compliance").val('{{data.form_data.office_handover_controller_compliance}}');
+   $("#office_handover_nozzle_compliance").val('{{data.form_data.office_handover_nozzle_compliance}}');
+   $("#office_handover_hydrant_compliance").val('{{data.form_data.office_handover_hydrant_compliance}}');
+   $("#office_handover_radio_compliance").val('{{data.form_data.office_handover_radio_compliance}}');
+   $("#office_handover_sensor_compliance").val('{{data.form_data.office_handover_sensor_compliance}}');
+   $("#office_handover_exhaust_compliance").val('{{data.form_data.office_handover_exhaust_compliance}}');
+   $("#office_handover_indicator_compliance").val('{{data.form_data.office_handover_indicator_compliance}}');
+   $("#office_handover_lamp_compliance").val('{{data.form_data.office_handover_lamp_compliance}}');
+   $("#office_handover_switch_compliance").val('{{data.form_data.office_handover_switch_compliance}}');
+   $("#office_handover_socket_compliance").val('{{data.form_data.office_handover_socket_compliance}}');
+   $("#office_handover_distribution_compliance").val('{{data.form_data.office_handover_distribution_compliance}}');
+   $("#office_handover_junction_compliance").val('{{data.form_data.office_handover_junction_compliance}}');
+   $("#office_handover_water_meter_compliance").val('{{data.form_data.office_handover_water_meter_compliance}}');
+   $("#office_handover_ammeter_compliance").val('{{data.form_data.office_handover_ammeter_compliance}}');
+   $("#office_handover_key_compliance").val('{{data.form_data.office_handover_key_compliance}}');
+ });
+</script>
+{{/extend}}

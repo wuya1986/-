@@ -1,0 +1,16 @@
+<table class="table table-hover">
+  <tr>
+    <th>时间</th>
+    <th>内容</th>
+  </tr>
+  {{#each list }}
+  <tr>
+    <td>
+      {{ymd this.create_date 'YYYY-MM-DD HH:mm'}}
+    </td>
+    <td>
+      {{{this.content}}}
+    </td>
+  </tr>
+  {{/each}}
+</table>

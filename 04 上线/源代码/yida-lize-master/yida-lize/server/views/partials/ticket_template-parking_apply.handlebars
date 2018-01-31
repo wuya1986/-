@@ -1,0 +1,49 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">申请者</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[parking_apply_fullname]" value="{{data.form_data.parking_apply_fullname}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系方式</label>
+  <div class="col-sm-9">
+    <input type="tel" class="form-control" name="form_data[parking_apply_mobile]" pattern="^1\d{10}$" oninvalid="setCustomValidity('请输入正确的手机号码')" oninput="setCustomValidity('')" value="{{data.form_data.parking_apply_mobile}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">车牌号码</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[parking_apply_vpl_number]" value="{{data.form_data.parking_apply_vpl_number}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">审批结果</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="parking_apply_result" name="form_data[parking_apply_result]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '信息审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    >
+      <option value="批准">批准</option>
+      <option value="拒绝">拒绝</option>
+    </select>
+  </div>
+</div>

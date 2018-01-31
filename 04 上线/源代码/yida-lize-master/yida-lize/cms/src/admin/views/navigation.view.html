@@ -1,0 +1,105 @@
+<!-- 注销模态 -->
+<div class="modal fade" id="signOutModal" tabindex="-1" role="dialog" aria-labelledby="signOutModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="关闭"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="signOutModalTitle">警告</h4>
+			</div>
+			<div class="modal-body">
+				<h4 class="text-center">您确定要退出登录吗？</h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button ng-click="signOut()" type="button" class="btn btn-danger">退出</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<nav class="navigation">
+	<img class="brand" src="/assets/admin/images/logo.png" srcset="/assets/admin/images/logo@2x.png 2x">
+	<div class="account">
+		{{user.fullname}} {{user.role.name}} <div data-toggle="modal" data-target="#signOutModal" class="sign-out"><i class="fa fa-sign-out"></i></div>
+	</div>
+	<ul class="list">
+		<li>
+			<a ui-sref="main" ui-sref-active-eq="active" class="item">
+				<i class="fa fa-dashboard fa-fw"></i>
+				控制面板
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.features" ui-sref-active="active" class="item">
+				<i class="fa fa-star fa-fw"></i>
+				推荐管理
+			</a>
+		</li>
+		<li ng-if="!notFoundContents">
+			<div class="item sub-list-heading">
+				<i class="fa fa-book fa-fw"></i>
+				内容管理
+				<span class="caret"></span>
+			</div>
+			<div class="sub-list">
+				<a ng-repeat="category in categories" ng-if="category.type === 'column'" ui-sref="main.contents({ category: category._id })" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					{{category.name}}
+				</a>
+				<a ui-sref="main.trash" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					回收站
+				</a>
+			</div>
+		</li>
+		<li ng-if="notFoundContents">
+			<a ui-sref="main.notFoundContents" ui-sref-active="active" class="item">
+				<i class="fa fa-book fa-fw"></i>
+				内容管理
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.media" ui-sref-active="active" class="item">
+				<i class="fa fa-archive fa-fw"></i>
+				媒体库
+			</a>
+		</li>
+		<li>
+			<a ui-sref="main.account" ui-sref-active="active" class="item">
+				<i class="fa fa-cog fa-fw"></i>
+				帐号设置
+			</a>
+		</li>
+		<li>
+			<div class="item sub-list-heading">
+				<i class="fa fa-cogs fa-fw"></i>
+				系统设置
+				<span class="caret"></span>
+			</div>
+			<div class="sub-list">
+				<a ui-sref="main.siteInfo" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					网站配置
+				</a>
+				<a ui-sref="main.categories" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					内容分类
+				</a>
+				<a ui-sref="main.contentModels" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					内容模型
+				</a>
+				<a ui-sref="main.featureModels" ui-sref-active="active" class="item">
+					<i class="fa fa-circle-o fa-fw"></i>
+					推荐模型
+				</a>
+			</div>
+		</li>
+	</ul>
+	<div nd-notification ng-show="notificationShow" ng-class="'text-' + type" class="notification">
+		<i ng-if="type === 'success'" class="fa fa-check-circle fa-fw"></i>
+		<i ng-if="type === 'warning'" class="fa fa-warning fa-fw"></i>
+		<i ng-if="type === 'danger'" class="fa fa-times-circle fa-fw"></i>
+		{{message}}
+	</div>
+</nav>

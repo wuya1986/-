@@ -1,0 +1,1360 @@
+{{#extend 'styles'}}
+<link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+{{/extend}}
+<div class="box-header with-border">
+  <h3 class="box-title">基本信息</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工类别</label>
+    <div class="col-sm-9">
+      <select class="form-control" id="decoration_application_type" name="form_data[decoration_application_type]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+        <option value="租户装修">租户装修</option>
+        <option value="项目委托施工">项目委托施工</option>
+        <option value="外部单位项目内施工">外部单位项目内施工</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工位置</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[decoration_application_floor]" value="{{data.form_data.decoration_application_floor}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+          {{else}}
+          disabled
+          {{/if}}
+        />
+        <span class="input-group-addon">层</span>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[decoration_application_number]" value="{{data.form_data.decoration_application_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+          {{else}}
+          disabled
+          {{/if}}
+        />
+        <span class="input-group-addon">号</span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label"></label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input type="text" class="form-control text-right" name="form_data[decoration_application_area]" value="{{data.form_data.decoration_application_area}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+          {{else}}
+          disabled
+          {{/if}}
+        />
+        <span class="input-group-addon">区域</span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">租户/安排施工单位名称</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_tenantry_unit_name]"  value="{{data.form_data.decoration_application_tenantry_unit_name}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系人</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_tenantry_contact]" value="{{data.form_data.decoration_application_tenantry_contact}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[decoration_application_tenantry_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.decoration_application_tenantry_tel}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工单位名称</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_construction_unit_name]"  value="{{data.form_data.decoration_application_construction_unit_name}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系人</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_construction_contact]" value="{{data.form_data.decoration_application_construction_contact}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[decoration_application_construction_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.decoration_application_construction_tel}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+</div>
+
+<div class="box-header with-border">
+  <h3 class="box-title">施工方案审核</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">施工方案图纸报送时间</label>
+    <div class="col-sm-6">
+      <div class="input-group time">
+        <input type="text" class="form-control" name="form_data[decoration_application_plan_drawing_date_time]" value="{{ymd data.form_data.decoration_application_plan_drawing_date_time 'YYYY-MM-DD HH:mm'}}" required
+          {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+          {{else}}
+          disabled
+          {{/if}}
+        />
+        <span class="input-group-addon"><i class="fa fa-th"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">同意进入后续流程</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_plan_agree" name="form_data[decoration_application_plan_agree]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      > 
+        <option value="同意">同意</option>
+        <option value="拒绝">拒绝</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">备注</label>
+    <div class="col-sm-9">
+      <textarea class="form-control" name="form_data[decoration_application_plan_agree_memo]"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      > {{data.form_data.decoration_application_plan_agree_memo}}</textarea>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">工程部审批</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_plan_repair_approved" name="form_data[decoration_application_plan_repair_approved]" required
+        {{#if (and (eq data.progress '工程经理审图') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="同意进入后续流程">同意进入后续流程</option>
+        <option value="修改后再报审">修改后再报审</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">工程部经理</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="form_data[decoration_application_plan_repair_approved_manager]" 
+      {{#if (and (eq data.progress '工程经理审图') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_plan_repair_approved_manager}}{{data.form_data.decoration_application_plan_repair_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_plan_repair_approved_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">安保部审批</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_plan_security_approved" name="form_data[decoration_application_plan_security_approved]" required
+        {{#if (and (eq data.progress '安保经理审图') (intersection @root.session.user.acl_roles '["security_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="同意进入后续流程">同意进入后续流程</option>
+        <option value="修改后再报审">修改后再报审</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">安保部经理</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="form_data[decoration_application_plan_security_approved_manager]" 
+      {{#if (and (eq data.progress '安保经理审图') (intersection @root.session.user.acl_roles '["security_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_plan_security_approved_manager}}{{data.form_data.decoration_application_plan_security_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_plan_security_approved_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">运营服务部审批</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_plan_building_approved" name="form_data[decoration_application_plan_building_approved]" required
+        {{#if (and (eq data.progress '运营经理审图') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="同意进入后续流程">同意进入后续流程</option>
+        <option value="修改后再报审">修改后再报审</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">运营服务部经理</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="form_data[decoration_application_plan_building_approved_manager]" 
+      {{#if (and (eq data.progress '运营经理审图') (intersection @root.session.user.acl_roles '["building_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_plan_building_approved_manager}}{{data.form_data.decoration_application_plan_building_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_plan_building_approved_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+</div>
+<div class="box-header with-border">
+  <h3 class="box-title">报审资料统计明细表</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工图纸一式四份</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_1_date]" value="{{ymd data.form_data.decoration_application_plan_list_1_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_1_memo]" value="{{data.form_data.decoration_application_plan_list_1_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">功能平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_2_date]" value="{{ymd data.form_data.decoration_application_plan_list_2_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_2_memo]" value="{{data.form_data.decoration_application_plan_list_2_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">综合天花图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_3_date]" value="{{ymd data.form_data.decoration_application_plan_list_3_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_3_memo]" value="{{data.form_data.decoration_application_plan_list_3_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">强电系统图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_4_date]" value="{{ymd data.form_data.decoration_application_plan_list_4_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_4_memo]" value="{{data.form_data.decoration_application_plan_list_4_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">照明系统图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_5_date]" value="{{ymd data.form_data.decoration_application_plan_list_5_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_5_memo]" value="{{data.form_data.decoration_application_plan_list_5_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">插座平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_6_date]" value="{{ymd data.form_data.decoration_application_plan_list_6_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_6_memo]" value="{{data.form_data.decoration_application_plan_list_6_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">空调、风、水平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_7_date]" value="{{ymd data.form_data.decoration_application_plan_list_7_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_7_memo]" value="{{data.form_data.decoration_application_plan_list_7_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">喷淋平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_8_date]" value="{{ymd data.form_data.decoration_application_plan_list_8_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_8_memo]" value="{{data.form_data.decoration_application_plan_list_8_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">烟感平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_9_date]" value="{{ymd data.form_data.decoration_application_plan_list_9_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_9_memo]" value="{{data.form_data.decoration_application_plan_list_9_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">弱电平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_10_date]" value="{{ymd data.form_data.decoration_application_plan_list_10_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_10_memo]" value="{{data.form_data.decoration_application_plan_list_10_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">局部做法图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_11_date]" value="{{ymd data.form_data.decoration_application_plan_list_11_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_11_memo]" value="{{data.form_data.decoration_application_plan_list_11_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">承重计算说明书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_12_date]" value="{{ymd data.form_data.decoration_application_plan_list_12_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_12_memo]" value="{{data.form_data.decoration_application_plan_list_12_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">消防系统说明书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_13_date]" value="{{ymd data.form_data.decoration_application_plan_list_13_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_13_memo]" value="{{data.form_data.decoration_application_plan_list_13_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">客户委托书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_14_date]" value="{{ymd data.form_data.decoration_application_plan_list_14_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_14_memo]" value="{{data.form_data.decoration_application_plan_list_14_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">设计营业执照</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_15_date]" value="{{ymd data.form_data.decoration_application_plan_list_15_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_15_memo]" value="{{data.form_data.decoration_application_plan_list_15_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">设计资质证书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_16_date]" value="{{ymd data.form_data.decoration_application_plan_list_16_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_16_memo]" value="{{data.form_data.decoration_application_plan_list_16_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工营业执照</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_17_date]" value="{{ymd data.form_data.decoration_application_plan_list_17_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_17_memo]" value="{{data.form_data.decoration_application_plan_list_17_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工资质证书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_18_date]" value="{{ymd data.form_data.decoration_application_plan_list_18_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_18_memo]" value="{{data.form_data.decoration_application_plan_list_18_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">劳动局颁发的安全许可证</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_19_date]" value="{{ymd data.form_data.decoration_application_plan_list_19_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_19_memo]" value="{{data.form_data.decoration_application_plan_list_19_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">监理合同</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_20_date]" value="{{ymd data.form_data.decoration_application_plan_list_20_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_20_memo]" value="{{data.form_data.decoration_application_plan_list_20_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">监理执照资质</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_21_date]" value="{{ymd data.form_data.decoration_application_plan_list_21_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_21_memo]" value="{{data.form_data.decoration_application_plan_list_21_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">承建商，客户书面申请</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_22_date]" value="{{ymd data.form_data.decoration_application_plan_list_22_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_22_memo]" value="{{data.form_data.decoration_application_plan_list_22_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">北京市建筑装修改造工程消防审核表</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_23_date]" value="{{ymd data.form_data.decoration_application_plan_list_23_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_23_memo]" value="{{data.form_data.decoration_application_plan_list_23_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">装修改造方案</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_24_date]" value="{{ymd data.form_data.decoration_application_plan_list_24_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_24_memo]" value="{{data.form_data.decoration_application_plan_list_24_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">总体施工进度安排表</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_25_date]" value="{{ymd data.form_data.decoration_application_plan_list_25_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_25_memo]" value="{{data.form_data.decoration_application_plan_list_25_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">消防工程改造方案</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_26_date]" value="{{ymd data.form_data.decoration_application_plan_list_26_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_26_memo]" value="{{data.form_data.decoration_application_plan_list_26_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">消防安全协议书</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_27_date]" value="{{ymd data.form_data.decoration_application_plan_list_27_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_27_memo]" value="{{data.form_data.decoration_application_plan_list_27_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">现场消防措施及防火负责人名单</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_28_date]" value="{{ymd data.form_data.decoration_application_plan_list_28_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_28_memo]" value="{{data.form_data.decoration_application_plan_list_28_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">装修材料检测报告</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_29_date]" value="{{ymd data.form_data.decoration_application_plan_list_29_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_29_memo]" value="{{data.form_data.decoration_application_plan_list_29_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">改造工程平面图</span></label>
+    <div class="col-sm-9">
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">收到日期</label>
+        <div class="col-sm-8">
+          <div class="input-group date">
+            <input type="text" class="form-control" name="form_data[decoration_application_plan_list_30_date]" value="{{ymd data.form_data.decoration_application_plan_list_30_date 'YYYY-MM-DD'}}" 
+            {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+            {{else}}
+            disabled
+            {{/if}}/>
+            <span class="input-group-addon"><i class="fa fa-th"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group form">
+        <label class="col-sm-4 control-label">备注</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="form_data[decoration_application_plan_list_30_memo]" value="{{data.form_data.decoration_application_plan_list_30_memo}}" 
+          {{#if (and (eq data.progress '审批受理') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="box-header with-border">
+  <h3 class="box-title">施工许可证审批</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">报送时间</label>
+    <div class="col-sm-6">
+      <div class="input-group time">
+        <input type="text" class="form-control" name="form_data[decoration_application_license_date_time]" value="{{ymd data.form_data.decoration_application_license_date_time 'YYYY-MM-DD HH:mm'}}" required
+        {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon"><i class="fa fa-th"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">已附费用交纳收据复印件</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_license_receipt" name="form_data[decoration_application_license_receipt]" required
+        {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="确认">确认</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">已附《施工方案审核表》</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_license_opinion" name="form_data[decoration_application_license_opinion]" required
+        {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="确认">确认</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">运营经理审批</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_responsible_manager]"{{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_license_responsible_manager}}{{data.form_data.decoration_application_license_responsible_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_license_responsible_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">已附《北京市丰台区公安消防支队建设工程消防设计审核书》或《小规模室内装修消防安全告知书》（视装修面积）</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_fire_receipt" name="form_data[decoration_application_fire_receipt]" required
+        {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="未确认">未确认</option>
+        <option value="确认">确认</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">无需附前述两项文件</label>
+    <div class="col-sm-6">
+      <select class="form-control" id="decoration_application_no_need_fire_file" name="form_data[decoration_application_no_need_fire_file]" required
+        {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+        {{else}}
+        disabled
+        {{/if}}
+      >
+        <option value="不需要">不需要</option>
+        <option value="需要">需要</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">工程部经理</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_repair_manager]"   {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_license_repair_manager}}{{data.form_data.decoration_application_license_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_license_repair_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">安保部经理</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_security_manager]"  {{#if (and (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_license_security_manager}}{{data.form_data.decoration_application_license_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.decoration_application_license_security_manager}}"
+      disabled
+      {{/if}} />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">项目总经理</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_chief_manager]" {{#if (and (eq data.progress '项目总经理审批') (intersection @root.session.user.acl_roles '["chief_manager"]'))}} 
+      value="{{#if data.form_data.decoration_application_license_chief_manager}}{{data.form_data.decoration_application_license_chief_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      disabled
+      value="{{data.form_data.decoration_application_license_chief_manager}}"
+      {{/if}} />
+    </div>
+  </div>
+</div>
+<div class="box-header with-border">
+  <h3 class="box-title">施工许可证</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-2 control-label">施工期限</label>
+    <div class="col-sm-5">
+      <div class="input-group date">
+        <input type="text" class="form-control" name="form_data[decoration_application_license_from_date]" id="decoration_application_license_from_date" value="{{ymd data.form_data.decoration_application_license_from_date 'YYYY-MM-DD'}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon"><i class="fa fa-th"></i></span>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="input-group date" id="decoration_application_license_end">
+        <input type="text" class="form-control" name="form_data[decoration_application_license_end_date]" id="decoration_application_license_end_date" value="{{ymd data.form_data.decoration_application_license_end_date 'YYYY-MM-DD'}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon"><i class="fa fa-th"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-6 control-label">签发时间</label>
+    <div class="col-sm-6">
+      <div class="input-group date">
+        <input type="text" class="form-control" name="form_data[decoration_application_license_issue_date]" value="{{ymd data.form_data.decoration_application_license_issue_date 'YYYY-MM-DD'}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon"><i class="fa fa-th"></i></span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">现场联系人1</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_issue_date_contact_1]" value="{{data.form_data.decoration_application_license_issue_date_contact_1}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话1</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[decoration_application_license_issue_date_tel_1]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.decoration_application_license_issue_date_tel_1}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">现场联系人2</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_issue_date_contact_2]" value="{{data.form_data.decoration_application_license_issue_date_contact_2}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话2</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[decoration_application_license_issue_date_tel_2]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.decoration_application_license_issue_date_tel_2}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">现场联系人3</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[decoration_application_license_issue_date_contact_3]" value="{{data.form_data.decoration_application_license_issue_date_contact_3}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话3</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[decoration_application_license_issue_date_tel_3]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.decoration_application_license_issue_date_tel_3}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '施工许可') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+    </div>
+  </div>
+</div>
+
+{{#extend 'scripts'}}
+<script src="{{@root.config.aliyun.cdn_prefix}}/moment.js/2.19.2/moment.min.js"></script>
+<script src="{{@root.config.aliyun.cdn_prefix}}/moment.js/2.19.2/locale/zh-cn.js"></script>
+<script src="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+ $(function () {
+   $('.input-group.time').datetimepicker({  
+     format: 'YYYY-MM-DD HH:mm',  
+     locale: moment.locale('zh-cn')  
+   });
+   $('.input-group.date').datepicker({
+     language: "zh-CN",
+     format: "yyyy-mm-dd"
+   });
+
+   $("#decoration_application_license_end_date").blur(function(){
+     if($("#decoration_application_license_end_date").val() < $("#decoration_application_license_from_date").val()) {
+      $("#decoration_application_license_end").addClass("has-error");
+     } else {
+      $("#decoration_application_license_end").removeClass("has-error");
+     }
+   });
+   
+  $("#decoration_application_type").val('{{data.form_data.decoration_application_type}}');
+  $("#decoration_application_plan_repair_approved").val('{{data.form_data.decoration_application_plan_repair_approved}}');
+  $("#decoration_application_plan_security_approved").val('{{data.form_data.decoration_application_plan_security_approved}}');
+  $("#decoration_application_plan_security_approved").val('{{data.form_data.decoration_application_plan_security_approved}}');
+  $("#decoration_application_plan_building_approved").val('{{data.form_data.decoration_application_plan_building_approved}}');
+  $("#decoration_application_license_receipt").val('{{data.form_data.decoration_application_license_receipt}}');
+  $("#decoration_application_license_opinion").val('{{data.form_data.decoration_application_license_opinion}}');
+  $("#decoration_application_fire_receipt").val('{{data.form_data.decoration_application_fire_receipt}}');
+  $("#decoration_application_no_need_fire_file").val('{{data.form_data.decoration_application_no_need_fire_file}}');
+});
+</script>
+{{/extend}}

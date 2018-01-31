@@ -1,0 +1,78 @@
+{{#if (isAllowed @root.session.permissions 'building' 'add')}}
+<section class="content-header">
+  <h1>
+    新建建筑
+    <small>新建建筑</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'building.list'}}}">List</a></li>
+    <li class="active">新建建筑</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">建筑信息</h3>
+        </div>
+        <form action="{{{url 'building.create'}}}" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">建筑名<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="building[building_name]" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">地址<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="building[building_address]" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">经度<span class="required_input">*</span></label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="building[loc_lng]" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">纬度<span class="required_input">*</span></label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="building[loc_lat]" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">描述</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="building[memo]" rows="6"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '{{{url "building.list"}}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>  
+    $('form').on('submit', function () {
+        $("#btn_save").attr("disabled","true");
+        $("#i_save").addClass("fa-spin");
+     });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

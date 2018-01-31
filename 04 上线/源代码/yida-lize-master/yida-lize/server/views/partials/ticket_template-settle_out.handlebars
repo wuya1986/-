@@ -1,0 +1,63 @@
+<h4>
+  基本信息
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_out_unit_name]" value="{{#if data.form_data.settle_out_unit_name}}{{data.form_data.settle_out_unit_name}}{{else}}{{data.company.company_name}}{{/if}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户位置</label>
+  <div class="col-sm-4">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[settle_out_floor]" value="{{#if data.form_data.settle_out_floor}}{{data.form_data.settle_out_floor}}{{else}}{{data.company.floor}}{{/if}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+      <span class="input-group-addon">层</span>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[settle_out_number]" value="{{#if data.form_data.settle_out_number}}{{data.form_data.settle_out_number}}{{else}}{{data.company.number}}{{/if}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}
+      />
+      <span class="input-group-addon">号</span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">项目总经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_out_general_manager]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '审批意见') (intersection @root.session.user.acl_roles '["chief_manager"]')))}}
+      value="{{#if data.form_data.settle_out_general_manager}}{{data.form_data.settle_out_general_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+      {{else}}
+      value="{{data.form_data.settle_out_general_manager}}"
+      disabled
+      {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">审批意见</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[settle_out_approval_comments]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '审批意见') (intersection @root.session.user.acl_roles '["chief_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}
+    > {{data.form_data.settle_out_approval_comments}}</textarea/>
+  </div>
+</div>

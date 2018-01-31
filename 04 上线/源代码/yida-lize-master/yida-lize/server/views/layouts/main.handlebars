@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{> page/title}}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/admin-lte/2.3.11/css/AdminLTE.min.css">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/admin-lte/2.3.11/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="{{@root.config.aliyun.static_content}}/stylesheets/style.css">
+    <link rel="stylesheet" href="{{@root.config.aliyun.static_content}}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <style>
+     .required_input {
+       color: red;
+     }
+     .error {
+       color: red;
+     }
+     .success {
+       color: green;
+     }
+     .form {
+       display: inline-block;
+       width: 100%;
+     }
+     .size25 {
+       width:25px;
+       height:25px;
+     }
+     .select2-container--default .select2-selection--multiple .select2-selection__choice {
+       color: black;
+     }
+    </style>
+    {{! Styles Block}}
+    {{{block 'styles'}}}
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-red sidebar-mini">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+    {{#if (about_eq user_agent 'staff-webview')}}
+    {{else}}
+    {{> page/header }}
+    {{> page/nav }}
+    {{/if}}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      {{{body}}}
+    </div><!-- /.content-wrapper -->
+    {{#if (about_eq user_agent 'staff-webview')}}
+    {{else}}
+    {{> page/footer }}
+    {{/if}}
+    </div><!-- ./wrapper -->
+    <!-- jQuery 2.1.4 -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/fastclick/1.0.6/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/admin-lte/2.3.11/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/admin-lte/2.3.11/js/demo.js"></script>
+    <script src="{{@root.config.aliyun.cdn_prefix}}/select2/4.0.3/js/select2.full.min.js"></script>
+    <script src="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <script src="{{@root.config.aliyun.static_content}}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+    <!-- Bootstrap-Confirmation -->
+    <script src="{{@root.config.aliyun.cdn_prefix}}/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
+    {{! Scripts block}}
+    {{{block "scripts"}}}
+    <script>
+        $().ready(function(){ 
+            var userAgent = navigator.userAgent.toLowerCase();
+            if (userAgent == "staff-webview") {
+                $(".main-header").hide();
+                $(".content-header").hide();
+                $(".main-footer").hide();
+                $(".content").css("padding", "0px");
+            }
+        })
+    </script>
+</body>
+</html>

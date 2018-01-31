@@ -1,0 +1,94 @@
+{{#if (isAllowed @root.session.permissions 'building' 'list')}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    建筑一览
+    <small>所有建筑一览</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">List</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box">
+        <div class="box-header search-area">
+          {{#if (isAllowed @root.session.permissions 'admin' 'add')}}
+          <a href="/crud/building/new" class="btn btn-xs btn-success">
+            <i class="fa fa-pencil"></i>
+            新建
+          </a>
+          {{/if}}
+          <div class="box-tools">
+            <form class="input-group input-group-sm" style="width: 150px;">
+              <input type="hidden" name="page" id="page" value="{{req.query.page}}" />
+              <input type="text" id="keyword" name="keyword" class="form-control pull-right" placeholder="Search" value="{{req.query.keyword}}"/>
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default search"><i class="fa fa-search"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+          {{> list_buildings list=list}}
+        </div>
+        <div class="box-footer clearfix">
+          {{{paginationView pagination}}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+  <script>
+    (function($) {
+        var uri;
+        $('.btn-danger').click(function(){
+          uri = $(this).attr('data-href');
+        });
+        $('.btn-danger').confirmation({
+          animation: true,
+          placement: "left",
+          title: "确定要删除此数据吗?",
+          btnOkLabel: '确定',
+          btnCancelLabel: '取消',
+          onConfirm: function (event) {
+            event.preventDefault();
+            $.post(uri, function(response) {
+                window.location.href = '/crud/buildings';
+            });
+          },
+      });
+
+      function search(page) {
+        var queryString = '/crud/buildings';
+        if (page) {
+          if (queryString.indexOf('?') >= 0) {
+            queryString += '&page=' + page;
+          } else {
+            queryString += '?page=' + page;
+          }
+        }
+
+        window.location.href = queryString;
+      }
+      $('.pageList').click(function(){
+        var $this = $(this);
+        var id = $this.data('id');
+        search(id);
+      });
+    })(jQuery)
+  </script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

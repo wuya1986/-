@@ -1,0 +1,98 @@
+{{#if (isAllowed @root.session.permissions 'building' 'show')}}
+<section class="content-header">
+  <h1>
+    建筑详细
+    <small>建筑详细信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'building.list'}}}">List</a></li>
+    <li class="active">建筑详细</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (isAllowed @root.session.permissions 'building' 'edit')}}
+        <a href="/crud/building/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'building' 'delete')}}
+        <a href="#" data-href="/crud/building/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">建筑信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+            <p><b>建筑名:</b>{{data.building_name}}</p>
+            <p><b>地址:</b>{{data.building_address}}</p>
+            <p><b>经纬度:</b>{{data.loc.[1]}},{{data.loc.[0]}}</p>
+            <p><b>描述:</b>{{{data.memo}}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if (intersection @root.session.user.acl_roles '["super_admin"]')}}
+  <div class="row">
+    <div class="col-sm-6 col-md-6">
+      <div class="box box-solid box-default collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title">事件</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{> list_events list=data.events}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</section>
+{{#extend 'scripts'}}
+<script>
+ (function($) {
+     // Delete building button
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定要删除此数据吗?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+            window.location.href = '/crud/buildings';
+        });
+      },
+  });
+ })(jQuery)
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

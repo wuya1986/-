@@ -1,0 +1,194 @@
+{{#if (isAllowed @root.session.permissions 'user' 'show')}}
+<section class="content-header">
+  <h1>
+    企业员工详细
+    <small>企业员工详细信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'user.list'}}}">List</a></li>
+    <li class="active">企业员工详细</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (isAllowed @root.session.permissions 'user' 'edit')}}
+        <a href="/crud/user/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'user' 'edit')}}
+        <a href="#" data-href="/crud/user/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'user' 'show')}}
+        <a href="/crud/chat?from_admin_id={{@root.session.user._id}}&to_user_id={{data._id}}" class="btn btn-sm btn-warning">
+          <i class="fa fa-paper-plane"></i>
+          发消息
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">员工信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <p><b>姓名:</b>
+            <img src="{{avatar @root.config.file_url data.avatar}}" class="img-circle size25">
+            {{data.fullname}}
+          </p>
+          <p><b>性别:</b> {{sex_title data.sex}}</p>
+          <p><b>电话号码:</b> {{data.mobile_no}}</p>
+          <p><b>身份证号码:</b> {{data.id_card}}</p>
+          <p><b>一卡通号码:</b> {{data.e_card}}</p>
+          <p><b>车牌号:</b> {{data.vpl_number}}</p>
+          <p><b>出生日期:</b> {{data.dob}}</p>
+          <p><b>身份标识:</b> {{data.role}}</p>
+          <p><b>所属企业:</b>
+            <a href="/crud/company/{{data.company._id}}">
+              {{data.company.company_name}}
+            </a>
+          </p>
+          <p><b>是否有效:</b> {{delete_flag data.delete_flag}}</p>
+          <p><b>备注:</b> {{{data.memo}}}
+            <p><b>创建日期:</b> {{ymd data.create_date 'YYYY-MM-DD'}}</p>
+        </div>
+      </div>
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">充值记录</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tr>
+                <th>时间</th>
+                <th>金额</th>
+                <th>状态</th>
+                <th>描述</th>
+              </tr>
+              {{#each data.userpays }}
+              <tr>
+                <td>{{ymd create_date 'YYYY-MM-DD HH:mm:ss'}}</td>
+                <td>{{currency_format this.total_fee}}</td>
+                <td>{{pay_progress this.progress}}</td>
+                <td>{{this.body}}</td>
+              </tr>
+              {{/each}}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">相关工作票</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <tr>
+                <th>内容</th>
+                <th>进度</th>
+                <th>发起时间</th>
+              </tr>
+              {{#each data.tickets }}
+              <tr>
+                <td>
+                  <a href="/crud/{{this.ticket_template._id}}/{{this._id}}">
+                    {{#if this.delete_flag}}
+                    <s>
+                      {{/if}}
+                      {{{this.content}}}
+                      {{#if this.delete_flag}}
+                    </s>
+                    {{/if}}
+                  </a>
+                </td>
+                <td>
+                  {{this.progress}}
+                </td>
+                <td>
+                  {{ymd create_date 'YYYY-MM-DD HH:mm:ss'}}</td>
+                </td>
+              </tr>
+              {{/each}}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#if (intersection @root.session.user.acl_roles '["super_admin"]')}}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <div class="box box-solid box-default collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title">事件</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{> list_events list=data.events}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</section>
+{{#extend 'scripts'}}
+<script>
+ (function($) {  
+    var uri;
+    $('.btn-danger.delete').click(function(){
+    uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+    animation: true,
+    placement: "bottom",
+    title: "确定要删除此数据吗?",
+    btnOkLabel: '确定',
+    btnCancelLabel: '取消',
+    onConfirm: function (event) {
+      event.preventDefault();
+      $.post(uri, function(response) {
+        window.location.href = '/crud/users';
+        });
+    },
+  });
+ })(jQuery)
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

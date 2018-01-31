@@ -1,0 +1,50 @@
+  <style>
+   .backimage {
+     background-image: url("https://images.unsplash.com/photo-1479569057788-b5a81cf434a5?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&s=1a7732a08f11d96ac6417b5cab8dd8f7");
+     background-repeat: no-repeat;
+     background-size: cover;
+   }
+  </style>
+<article class="sign-in backimage">
+  <div ng-class="{ 'shake': animateShake }" class="content">
+    <img class="brand" src="/assets/admin/images/logo-lg.png" srcset="/assets/admin/images/logo-lg@2x.png 2x">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">欢迎回来</h3>
+      </div>
+      <div class="panel-body">
+        <form ng-submit="signIn()" id="signInForm" name="signInForm" novalidate>
+          <div ng-class="{ 'has-error': (signInForm.username.$touched && signInForm.username.$invalid) || wrongUsernameOrPassword }" class="form-group">
+            <label class="sr-only" for="username">Username：</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="inputIconUser"><i class="fa fa-user fa-fw"></i></span>
+              <input ng-model="username" ng-pattern="/1\d{10}/" ng-disabled="transmitting" class="form-control" id="username" type="username" name="username" placeholder="拥有“内容管理”权限的管理员方可登录" aria-describedby="inputIconUser" required>
+            </div>
+          </div>
+          <div ng-class="{ 'has-error': (signInForm.password.$touched && signInForm.password.$invalid) || wrongUsernameOrPassword }" class="form-group">
+            <label class="sr-only" for="password">密码：</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="inputIconPwd"><i class="fa fa-lock fa-fw"></i></span>
+              <input ng-model="password" ng-minlength="4" ng-disabled="transmitting" class="form-control" id="password" type="password" name="password" placeholder="请输入密码" aria-describedby="inputIconPwd" required>
+            </div>
+          </div>
+          <div ng-class="{ 'has-error': (signInForm.password.$touched && signInForm.password.$invalid) || wrongEmailOrPassword }" class="form-group">
+            <label class="sr-only" for="password">验证码：</label>
+            <div class="input-group">
+              <div class="col-xs-8" style="padding-left: 0px;padding-right: 0px;">
+                <input ng-model="captchaCode" ng-minlength="4" ng-disabled="transmitting" class="form-control" id="captchaCode" type="captchaCode" name="captchaCode"  placeholder="请输入验证码" aria-describedby="inputIconUser" required>
+              </div>
+              <div class="col-xs-4" id="captcha" ng-click="changeCaptcha()"></div>
+            </div>
+          </div>
+          <div class="checkbox">
+            <label>
+              <input ng-model="autoSignIn" ng-disabled="transmitting" type="checkbox"> 下次自动登陆
+            </label>
+          </div>
+          <button ng-disabled="signInForm.$invalid || transmitting" class="btn btn-primary btn-block" form="signInForm" type="submit">登录</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</article>

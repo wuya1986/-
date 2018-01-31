@@ -1,0 +1,102 @@
+
+{{#if (isAllowed @root.session.permissions 'meter' 'add')}}
+<section class="content-header">
+  <h1>
+    修改水电煤表号
+    <small>修改水电煤表号</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'company.list'}}}">List</a></li>
+    <li class="active">修改水电煤表号</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">水电煤表号信息</h3>
+        </div>
+        <form action="/crud/post_meter_edit?meter_id={{meter._id}}" method="post">
+          <input type="hidden" name="company" value="{{meter.company._id}}">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">企业名称</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{meter.company.company_name}}" disabled />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">租用位置</label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" value="{{meter.company.floor}}" disabled />
+                  <span class="input-group-addon">层</span>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" value="{{meter.company.number}}" disabled />
+                  <span class="input-group-addon">号</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">表号<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="meter_number" value="{{meter.meter_number}}" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">类别<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="meter_type" value="{{meter.meter_type}}" required>
+                  <option value="水">水</option>
+                  <option value="电">电</option>
+                  <option value="煤">煤</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">位置<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="meter_location" value="{{meter.meter_location}}" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">无效/有效<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="delete_flag" id="delete_flag" required>
+                  <option value="false">有效</option>
+                  <option value="true">无效</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '/crud/company/{{meter.company._id}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script> 
+  $('#delete_flag').select2().val("{{meter.delete_flag}}").trigger('change');
+  $('form').on('submit', function () {
+      $("#i_save").addClass("fa-spin");
+  });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

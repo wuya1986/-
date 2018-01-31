@@ -1,0 +1,416 @@
+<h4>
+  基本信息
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_company_name]"  value="{{data.form_data.goods_let_company_name}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租用位置</label>
+  <div class="col-sm-4">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_floor]" value="{{data.form_data.goods_let_floor}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+      <span class="input-group-addon">层</span>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_number]" value="{{data.form_data.goods_let_number}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+      <span class="input-group-addon">号</span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">申请类别</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="goods_let_type" name="form_data[goods_let_type]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >
+      <option value="搬入">搬入</option>
+      <option value="搬出">搬出</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">预约日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[goods_let_date]" value="{{ymd data.form_data.goods_let_date 'YYYY-MM-DD'}}" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+             {{else}}
+             disabled
+             {{/if}}/>
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">是否使用卸货通道</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="goods_let_unloading_channel" name="form_data[goods_let_unloading_channel]"  required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >
+      <option value="是">是</option>
+      <option value="否">否</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">装修材料类</label>
+</div>
+<div class="form-group form">
+  <div class="col-sm-6" style="padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">水泥</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_cement]" value="{{data.form_data.goods_let_cement}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">袋</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">木板</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_board]" value="{{data.form_data.goods_let_board}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">金属制品</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_metal]" value="{{data.form_data.goods_let_metal}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">办公家具类</label>
+</div>
+<div class="form-group form">
+  <div class="col-sm-6" style="padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">桌椅</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_desk]" value="{{data.form_data.goods_let_desk}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">木制成品</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_wood]" value="{{data.form_data.goods_let_wood}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">办公电器类</label>
+</div>
+<div class="form-group form">
+  <div class="col-sm-6" style="padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">台式机</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_computer]" value="{{data.form_data.goods_let_computer}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">台</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">投影仪</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_projector]" value="{{data.form_data.goods_let_projector}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">台</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">电视/视频会议设备</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_tv]" value="{{data.form_data.goods_let_tv}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">台</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">电扇/冷风扇</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_fan]" value="{{data.form_data.goods_let_fan}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">台</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">其他类</label>
+</div>
+<div class="form-group form">
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">大型绿植</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_vegetation]" value="{{data.form_data.goods_let_vegetation}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">盆</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">饮用水等</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_water]" value="{{data.form_data.goods_let_water}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6" style="padding-top: 5px; padding-right: 5px; padding-left: 5px;">
+    <div class="input-group">
+      <label class="col-sm-5 control-label">封箱不可拆物品</label>
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[goods_let_seal]" value="{{data.form_data.goods_let_seal}}"
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">件</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">申请人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_applicant]"  value="{{data.form_data.goods_let_applicant}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">申请人职务或申请人与租户关系</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_applicant_appertain]"  value="{{data.form_data.goods_let_applicant_appertain}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户大件物品进/出门条确认人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_confirm_staff]"
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+           value="{{#if data.form_data.goods_let_confirm_staff}}{{data.form_data.goods_let_confirm_staff}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.goods_let_confirm_staff}}"
+           disabled
+           {{/if}} />
+  </div>
+</div>
+<h4>
+  运营服务部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">运营服务部（核对确认人）</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_building_staff]"
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+           value="{{#if data.form_data.goods_let_building_staff}}{{data.form_data.goods_let_building_staff}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.goods_let_building_staff}}"
+           disabled
+           {{/if}} />
+  </div>
+</div>
+{{#if (eq data.ticket_template._id 'goods_letout')}}
+<h4>
+  财务部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">费用确认员</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_fee_confirmer]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '费用确认员审批') (intersection @root.session.user.acl_roles '["fee_confirmer"]')))}}
+           value="{{#if data.form_data.goods_let_fee_confirmer}}{{data.form_data.goods_let_fee_confirmer}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.goods_let_fee_confirmer}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">费用确认员确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[goods_let_fee_confirmer_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '费用确认员审批') (intersection @root.session.user.acl_roles '["fee_confirmer"]')))}}
+             value="{{#if data.form_data.goods_let_fee_confirmer_date}}{{ymd data.form_data.goods_let_fee_confirmer_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.goods_let_fee_confirmer_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+{{/if}}
+{{#if (eq data.ticket_template._id 'goods_letin')}}
+<h4>
+  工程部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_repair_manager]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+           value="{{#if data.form_data.goods_let_repair_manager}}{{data.form_data.goods_let_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.goods_let_repair_manager}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[goods_let_repair_manager_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+             value="{{#if data.form_data.goods_let_repair_manager_date}}{{ymd data.form_data.goods_let_repair_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.goods_let_repair_manager_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+{{/if}}
+<h4>
+  安保部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[goods_let_security_manager]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+           value="{{#if data.form_data.goods_let_security_manager}}{{data.form_data.goods_let_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.goods_let_security_manager}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[goods_let_security_manager_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+             value="{{#if data.form_data.goods_let_security_manager_date}}{{ymd data.form_data.goods_let_security_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.goods_let_security_manager_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $('.input-group.date').datepicker({
+     language: "zh-CN",
+     format: "yyyy-mm-dd"
+   });
+   if (data.ticket_template._id === 'goods_letin') {
+    $("#goods_let_type").val('搬入');
+  } else if (data.ticket_template._id === 'goods_letout') {
+    $("#goods_let_type").val('搬出');
+  } else {
+   $("#goods_let_unloading_channel").val('{{data.form_data.goods_let_unloading_channel}}');
+ });
+</script>
+{{/extend}}

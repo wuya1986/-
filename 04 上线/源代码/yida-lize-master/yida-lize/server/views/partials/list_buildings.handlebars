@@ -1,0 +1,35 @@
+<table class="table table-hover">
+  <tr>
+    <th>建筑名</th>
+    <th>地址</th>
+    <th>经度</th>
+    <th>纬度</th>
+    <th>操作</th>
+  </tr>
+  {{#each list }}
+  <tr>
+    <td>
+      <a href="/crud/building/{{this._id}}">
+        {{this.building_name}}
+      </a>
+    </td>
+    <td>{{this.building_address}}</td>
+    <td>{{this.loc.[1]}}</td>
+    <td>{{this.loc.[0]}}</td>
+    <td>
+      {{#if (isAllowed @root.session.permissions 'building' 'edit')}}
+      <a href="/crud/building/{{this._id}}/edit" class="btn btn-xs btn-success">
+        <i class="fa fa-pencil"></i>
+        修改
+      </a>
+      {{/if}}
+      {{#if (isAllowed @root.session.permissions 'building' 'delete')}}
+      <a href="#" class="btn btn-xs btn-danger delete" data-href="/crud/building/{{this._id}}?_method=delete">
+        <i class="fa fa-remove"></i>
+        删除
+      </a>
+      {{/if}}
+    </td>
+  </tr>
+  {{/each}}
+</table>

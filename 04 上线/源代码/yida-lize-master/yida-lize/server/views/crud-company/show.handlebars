@@ -1,0 +1,360 @@
+{{#if (isAllowed @root.session.permissions 'company' 'show')}}
+{{#extend 'styles'}}
+<link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/jqueryui/1.12.1/jquery-ui.min.css">
+<link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/blueimp-file-upload/9.14.2/css/jquery.fileupload.min.css">
+{{/extend}}
+<section class="content-header">
+  <h1>
+    企业详细
+    <small>企业详细信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'company.list'}}}">List</a></li>
+    <li class="active">企业详细</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (isAllowed @root.session.permissions 'company' 'edit')}}
+        <a href="/crud/company/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'company' 'delete')}}
+        <a href="#" data-href="/crud/company/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+        {{#if (and (ne user_agent 'staff-webview') (isAllowed @root.session.permissions 'company' 'batchly_charge'))}}
+        <span class="btn btn-warning fileinput-button">
+          <i class="fa fa-money"></i>
+          <span>集体充值</span>
+          <input id="batchly_charge" class="fileupload" type="file" name="files[]">
+        </span>
+        <a href="/templates/企业集体充值.xlsx">
+        <span class="btn btn-warning fileinput-button">
+          <i class="fa fa-money"></i>
+          <span>模板下载</span>
+        </span>
+        </a>
+        {{/if}}
+        {{#if (and (ne user_agent 'staff-webview') (isAllowed @root.session.permissions 'user' 'add'))}}
+        <span class="btn btn-primary fileinput-button">
+          <i class="fa fa-money"></i>
+          <span>员工导入</span>
+          <input id="user_import" class="fileupload" type="file" name="files[]">
+        </span>
+        <a href="/templates/员工导入.xlsx">
+        <span class="btn btn-primary fileinput-button">
+          <i class="fa fa-money"></i>
+          <span>模板下载</span>
+        </span>
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{#if message}}
+  <div class="alert alert-info alert-dismissable" style="width:600px" >
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {{{message}}}
+  </div>
+  {{/if}}  
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">企业信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <p><b>企业名称:</b>{{data.company_name}}</p>
+          <p><b>所在位置:</b> {{data.floor}}层{{data.number}}号</p>
+          {{#if (not_exists @root.session.user.acl_roles 'repair_team')}}
+          <p><b>产品名称:</b> {{data.production}}</p>
+          <p><b>产品性质:</b> {{data.production_category}}</p>
+          <p><b>所属产业:</b> {{data.category_type}}</p>
+          <p><b>员工数:</b> {{data.employee_count}}人</p>
+          <p><b>投资规模:</b> {{data.capital}}万元人民币</p>
+          <p><b>法人代表:</b> {{data.lega_person}}</p>
+          <p><b>成立日期:</b>{{#if data.build_date}}{{ymd data.build_date 'YYYY-MM-DD'}}{{/if}}</p>
+          <p><b>企业网址:</b> {{data.website}}</p>
+          {{/if}}
+          <p><b>其他:</b> {{data.memo}}</p>
+          <p><b>是否有效:</b> {{delete_flag data.delete_flag}}</p>
+        </div>
+      </div>
+    </div>
+    {{#if (not_exists @root.session.user.acl_roles 'repair_team')}}
+    <div class="col-sm-6 col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">企业员工列表</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <table class="table table-hover">
+            <tr>
+              <th>姓名</th>
+              <th>电话</th>
+              <th>身份证</th>
+              <th>身份</th>
+            </tr>
+            {{#each users}}
+            <tr>
+              <td>
+                <a href="/crud/user/{{this._id}}">
+                  <img src="{{avatar @root.config.file_url this.avatar}}" class="img-circle size25">
+                  {{this.fullname}}
+                </a>
+              </td>
+              <td>{{this.mobile_no}}</td>
+              <td>{{this.id_card}}</td>
+              <td>{{this.role}}</td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">水电煤列表</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        {{#if (isAllowed @root.session.permissions 'meter' 'add')}}
+        <div class="box-body">
+          <a href="/crud/meter_add?company_id={{data._id}}" class="btn btn-sm btn-success">
+            <i class="fa fa-pencil"></i>
+            表号添加
+          </a>
+        </div>
+        {{/if}}
+        <div class="box-body">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              {{#each meters}}
+              <li>
+                <a href="#{{this._id}}" data-toggle="tab">{{this.meter_type}}({{this.meter_number}})
+                </a>
+              </li>
+              {{/each}}
+            </ul>
+            <div class="tab-content">
+              {{#each meters}}
+              <div class="tab-pane" id="{{this._id}}">
+                <div class="box-header with-border">
+                  <h3 class="box-title">基本信息</h3>
+                  <div class="box-tools pull-right">
+                    {{#if (isAllowed @root.session.permissions 'meter' 'edit')}}
+                    <a href="/crud/meter_add?meter_id={{this._id}}" class="btn btn-sm btn-success">
+                      <i class="fa fa-pencil"></i>
+                      修改
+                    </a>
+                    {{/if}}
+                    {{#if (isAllowed @root.session.permissions 'meter' 'add')}}
+                    <a href="/crud/meter_reading_add?meter_id={{this._id}}" class="btn btn-sm btn-warning">
+                      <i class="fa fa-pencil"></i>
+                      抄表
+                    </a>
+                    {{/if}}
+                  </div>
+                </div>
+                <div class="box-body">
+                  <p><b>表号:</b> {{this.meter_number}}</p>
+                  <p><b>类别:</b> {{this.meter_type}}</p>
+                  <p><b>位置:</b> {{this.meter_location}}</p>
+                  <p><b>是否有效:</b> {{delete_flag this.delete_flag}}</p>
+                </div>
+                <div class="box box-solid box-default">
+                  <div class="box-header with-border">
+                    <h3 class="box-title">抄表列表</h3>
+                  </div>
+                  <div class="box-body">
+                    <table class="table table-hover">
+                      <tr>
+                        <th>抄表日期</th>
+                        <th>前次表数</th>
+                        <th>本次表数</th>
+                        <th>倍率</th>
+                        <th>本期用量</th>
+                        <th>租户确认</th>
+                        <th>操作</th>
+                      </tr>
+                      {{#each this.meter_readings}}
+                      <tr>
+                        <td>{{ymd this.create_date 'YYYY-MM-DD'}}</td>
+                        <td>{{this.before_number}}</td>
+                        <td>{{this.this_number}}</td>
+                        <td>{{this.multiple}}</td>
+                        <td>{{this.this_usage}}</td>
+                        <td>{{this.company_confirm}}</td>
+                        <td>
+                          {{#if (isAllowed @root.session.permissions 'meter' 'edit')}}
+                          {{#if this.company_confirm}}
+                          无
+                          {{else}}
+                          <a href="/crud/meter_reading_edit?meter_reading_id={{this._id}}" class="btn btn-xs btn-success">
+                            <i class="fa fa-pencil"></i>
+                            修改
+                          </a>
+                          {{/if}}
+                          {{/if}}
+                        </td>
+                      </tr>
+                      {{/each}}
+                    </table>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{#if (intersection @root.session.user.acl_roles '["super_admin"]')}}
+  <div class="row">
+    <div class="col-sm-12 col-md-12">
+      <div class="box box-solid box-default collapsed-box">
+        <div class="box-header with-border">
+          <h3 class="box-title">事件</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          {{> list_events list=data.events}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+</section>
+{{#extend 'scripts'}}
+<script src="{{@root.config.aliyun.cdn_prefix}}/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="{{@root.config.aliyun.cdn_prefix}}/blueimp-file-upload/9.14.2/js/jquery.fileupload.min.js"></script>
+<script>
+ $(function() {
+    $(".nav.nav-tabs li:eq(0)").addClass("active");
+    $(".tab-pane:eq(0)").addClass("active");
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定要删除此数据吗?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+            window.location.href = '/crud/companys';
+        });
+      },
+  });
+   {{> select2_script_user}}
+
+   $('.add-company-user').click(function(event) {
+     var user = $('#username').val();
+     if(user){
+       var company_id = '{{data._id}}';
+       $.ajax({
+         type: 'POST',
+         dataType: 'json',
+         url: '/crud/post_add_company_user',
+         data: {
+           user_id: user,
+           company_id
+         }
+       }).then(function(data) {
+         if (data.success) {
+           location.reload();
+         }
+       });
+     }
+   });
+
+    var uri_company_user;
+    $('.delete_company_user').click(function(){
+      uri_company_user = $(this).attr('data-href');
+    });
+    $('.delete_company_user').confirmation({
+      animation: true, 
+      placement: "bottom", 
+      title: "确定删除?", 
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri_company_user, function(response) {
+         if (response.success)
+           location.reload();
+         else
+           alert(response.msg);
+        });
+      }, 
+  });
+   //upload
+   $('.fileupload').fileupload({
+     url: '/utils/post_upload',
+     dataType: 'json',
+     done: function (e, data) {
+       var func_type = $(this).attr('id');
+       var file = data.result.files[0];
+
+       //parse file
+       $.ajax({
+         url: '/utils/post_xlsx?company_id={{data._id}}&func_type=' + func_type,
+         type: 'POST',
+         data: file
+       }).then(function(res) {
+         alert(res.result);
+         if (res.success) {
+           window.location.href = '/crud/company/{{data._id}}';
+         }
+       });
+       $('#progress').hide()
+     },
+     progressall: function (e, data) {
+       $('#progress').show()
+       var progress = parseInt(data.loaded / data.total * 100, 10);
+       $('#progress .progress-bar').css(
+         'width',
+         progress + '%'
+       );
+     }
+   }).prop('disabled', !$.support.fileInput)
+                   .parent().addClass($.support.fileInput ? undefined : 'disabled');
+ });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

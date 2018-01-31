@@ -1,0 +1,91 @@
+{{#if (isAllowed @root.session.permissions 'cms' 'list')}}
+<section class="content-header">
+  <h1>
+    CMS列表
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">CMS列表</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box">
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tr>
+              <th>标题</th>
+              <th>创建时间</th>
+            </tr>
+            {{#each list }}
+            <tr>
+              <td>
+                <a href="/crud/cms/{{this._id}}">
+                  {{title}}
+                </a>
+              </td>
+              <td>
+                {{ymd date 'YYYY-MM-DD HH:mm:ss'}}</td>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+        <div class="box-footer clearfix">
+          {{{paginationView pagination}}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+ $(function () {
+   function search() {
+     var page = $('#page').val();
+     var keyword = $('#keyword').val();
+
+     var queryString = '/crud/messages?a=1';
+     if (page) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&page=' + page;
+       } else {
+         queryString += '?page=' + page;
+       }
+     }
+     if (keyword) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&keyword=' + keyword;
+       } else {
+         queryString += '?keyword=' + keyword;
+       }
+     }
+
+     window.location.href = queryString;
+   }
+
+   $('.pageList').click(function(){
+     var $this = $(this);
+     var id = $this.data('id');
+     $('#page').val(id);
+     search();
+   });
+   $('.search').click(function(){
+     $('#page').val(1);
+     search();
+   });
+ });
+</script>
+{{/extend}}
+
+{{else}}
+no premission
+{{/if}}

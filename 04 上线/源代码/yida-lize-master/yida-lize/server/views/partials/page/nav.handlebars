@@ -1,0 +1,133 @@
+<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar">
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    {{!--
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+      <div class="input-group">
+        <input type="text" name="q" class="form-control" placeholder="Search..." />
+        <span class="input-group-btn">
+          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+        </span>
+      </div>
+    </form>
+    <!-- /.search form -->
+    --}}
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+      <li class="header">MAIN NAVIGATION</li>
+      <li class="{{{activeRoute 'dashboard.index'}}}">
+        <a href="{{{url 'dashboard.index'}}}">
+          <i class="fa fa-dashboard"></i> <span>{{@root.app.zone.title}}概览</span>
+        </a>
+      </li>
+      <li class="{{{activeRoutes 'building'}}} treeview">
+        <a href="#">
+          <i class="fa fa-files-o"></i>
+          <span>基础设施</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          {{#if (isAllowed @root.session.permissions 'building' 'list')}}
+          <li class="{{{activeRoute 'building'}}}">
+            <a href="{{{url 'building.list'}}}">
+              <i class="fa fa-building"></i> <span>建筑一览</span>
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </li>
+      <li class="{{{activeRoutes 'company,user'}}} treeview">
+        <a href="#">
+          <i class="fa fa-files-o"></i>
+          <span>企业管理</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          {{#if (isAllowed @root.session.permissions 'company' 'list')}}
+          <li class="{{{activeRoute 'company'}}}">
+            <a href="{{{url 'company.list'}}}">
+              <i class="fa fa-gear"></i> <span>企业管理</span>
+            </a>
+          </li>
+          {{/if}}
+          {{#if (isAllowed @root.session.permissions 'user' 'list')}}
+          <li class="{{{activeRoute 'user'}}}">
+            <a href="{{{url 'user.list'}}}">
+              <i class="fa fa-user"></i> <span>员工管理</span>
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </li>
+      <li class="{{{activeRoutes (separate @root.app.ticketTemplates)}}} treeview">
+        <a href="#">
+          <i class="fa fa-files-o"></i>
+          <span>物业服务</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          {{#each @root.app.ticketTemplates }}
+          {{#if (isAllowed @root.session.permissions this._id 'list')}}
+          <li class="{{{activeRoute this._id}}}">
+            <a href="/crud/{{this._id}}s">
+              <i class="fa fa-gear"></i>
+              <span>{{this.title}}</span>
+              <span class="pull-right-container">
+                <span id="badge_{{this._id}}" class="label label-danger pull-right"></span>
+              </span>
+            </a>
+          </li>
+          {{/if}}
+          {{/each}}
+        </ul>
+      </li>
+      {{#if (isAllowed @root.session.permissions 'admin' 'list')}}
+      <li class="{{{activeRoutes 'ticket_template,admin,acl,message,cms'}}} treeview">
+        <a href="#">
+          <i class="fa fa-files-o"></i>
+          <span>系统管理</span>
+          <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+          {{#if (isAllowed @root.session.permissions 'message' 'list')}}
+          <li class="{{{activeRoute 'message'}}}">
+            <a href="{{{url 'message.list'}}}">
+              <i class="fa fa-bell-o"></i> <span>消息管理</span>
+            </a>
+          </li>
+          {{/if}}
+          {{#if (isAllowed @root.session.permissions 'cms' 'list')}}
+          <li class="{{{activeRoute 'cms'}}}">
+            <a href="{{{url 'cms.list'}}}">
+              <i class="fa fa-bell-o"></i> <span>CMS留言评论</span>
+            </a>
+          </li>
+          {{/if}}
+          {{#if (isAllowed @root.session.permissions 'ticket_template' 'list')}}
+          <li class="{{{activeRoute 'ticket_template'}}}">
+            <a href="{{{url 'ticket_template.list'}}}">
+              <i class="fa fa-bell-o"></i> <span>工作票模版</span>
+            </a>
+          </li>
+          {{/if}}
+          {{#if (isAllowed @root.session.permissions 'admin' 'list')}}
+          <li class="{{{activeRoute 'admin'}}}">
+            <a href="{{{url 'admin.list'}}}">
+              <i class="fa fa-user-secret"></i> <span>管理员</span>
+            </a>
+          </li>
+          <li class="{{{activeRoute 'acl'}}}">
+            <a href="{{{url 'acl.index'}}}">
+              <i class="fa fa-user-secret"></i> <span>角色管理</span>
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </li>
+      {{/if}}
+    </ul>
+  </section>
+  <!-- /.sidebar -->
+</aside>

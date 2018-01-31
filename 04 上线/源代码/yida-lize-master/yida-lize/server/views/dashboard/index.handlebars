@@ -1,0 +1,103 @@
+{{#extend 'styles'}}
+  <link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/morris.js/0.5.1/morris.css">
+{{/extend}}
+<section class="content-header">
+  <h1>
+    概览
+    <small>{{@root.session.user.city}}</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">概览</li>
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">用户增长图</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body chart-responsive">
+          <div class="chart" id="user-line-chart" style="height: 300px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">物业服务完成图</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body chart-responsive">
+          <div class="chart" id="bar-chart" style="height: 300px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">用户类型图</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body chart-responsive">
+          <div class="chart" id="sales-chart" style="height: 300px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+  <script src="{{@root.config.aliyun.cdn_prefix}}/raphael/2.2.7/raphael.min.js"></script>
+  <script src="{{@root.config.aliyun.cdn_prefix}}/morris.js/0.5.1/morris.min.js"></script>
+
+  <script>
+    $(function () {
+      new Morris.Line({
+        element: 'user-line-chart',
+        resize: true,
+        data: {{{user_month_data}}},
+        xkey: 'month_key',
+        ykeys: ['users_count'],
+        labels: ['数量'],
+        lineColors: ['#3c8dbc'],
+        hideHover: 'auto'
+      });
+      new Morris.Bar({
+        element: 'bar-chart',
+        data: {{{ticket_month_data}}},
+        barColors: ['#00a65a', '#f56954'],
+        xkey: 'month_key',
+        ykeys: ['tickets_total_count', 'tickets_over_count'],
+        labels: ['总数量', '已完结'],
+        hideHover: 'auto'
+      });
+      new Morris.Donut({
+        element: 'sales-chart',
+        resize: true,
+        colors: ["#3c8dbc", "#f56954", "#00a65a"],
+        data: {{{user_type_data}}},
+        hideHover: 'auto'
+      });
+    });
+  </script>
+{{/extend}}

@@ -1,0 +1,90 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">来访单位</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[company_name]" value="{{data.form_data.company_name}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[contact]" value="{{data.form_data.contact}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">手机号码</label>
+  <div class="col-sm-9">
+    <input type="tel" class="form-control" name="form_data[tel]" pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  title="请输入数字" value="{{data.form_data.tel}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">来访人数</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[total]" value="{{data.form_data.total}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">预约日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[reserve_date]" value="{{ymd data.form_data.reserve_date 'YYYY-MM-DD'}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">参观种类</label>
+  <div class="col-sm-9">
+    <select class="form-control"name="form_data[reserve_type]"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+      <option></option>
+      <option value="参观拜访">参观拜访</option>
+      <option value="商务合作">商务合作</option>
+      <option value="新闻采访">新闻采访</option>
+      <option value="其他">其他</option>   
+    </select>
+
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">备注</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[office_handover_distribution_memo]"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}>{{data.form_data.content}}</textarea>
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+  $(function () {
+    $('.input-group.date').datepicker({
+      language: "zh-CN",
+      format: "yyyy-mm-dd"
+    });
+  });
+</script>
+{{/extend}}

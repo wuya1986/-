@@ -1,0 +1,64 @@
+{{#if (or (isAllowed @root.session.permissions 'cms' 'show') (about_eq @root.session.user._id data._id))}}
+<section class="content-header">
+  <h1>CMS详细信息</h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'cms.list'}}}">List</a></li>
+    <li class="active">CMS详细信息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-5">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">基本信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <p><b>标题:</b>
+            {{data.title}}
+          </p>
+          <p><b>摘要:</b>
+            {{{data.abstract}}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">回复一览</h3>
+        </div>
+        <div class="box-body chat" id="chat-box" style="overflow: auto; width: auto; height: auto;">
+          {{#each data.comments }}
+          <div class="item">
+            {{#if this.user.avatar}}
+            <img src="{{avatar @root.config.file_url this.user.avatar}}" alt="user image" class="online">
+            {{else}}
+            <img src="/avatars/avatar.svg" alt="user image" class="online">
+            {{/if}}
+            <p class="message">
+              <a href="/crud/user/{{this.user._id}}" class="name">
+                <small class="text-muted pull-right">
+                  <i class="fa fa-clock-o"></i>
+                  {{ymd this.create_date 'YYYY-MM-DD HH:mm:ss'}}
+                </small>
+                {{this.user.fullname}}
+              </a>
+              {{this.content}}
+            </p>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

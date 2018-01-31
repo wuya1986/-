@@ -1,0 +1,22 @@
+* 安装方法
+需要 nodev7, redis, mongodb
+** npm install -g cnpm --registry=https://registry.npm.taobao.org
+** cnpm install pm2 node-gpy mocha -g
+** cnpm install
+** pm2 start ecosystem.config.js
+** http://localhost:3011/login  6055120@qq.com/pass
+
+
+```sh
+rsync -avz --delete --exclude excel/ --exclude public/avatars/ --exclude node_modules/ --exclude .git /works/projects/yida/server/ yidalize_no2:/root/yida-lize-property/
+```
+
+```sh
+0 9 9 * * /root/.nvm/versions/node/v8.9.1/bin/node  /root/yida-lize-property/batch/electric_water_monthly_message.js  2>&1 >>  //tmp/electric_water_monthly_message.log
+55 15 * * * /root/.nvm/versions/node/v8.9.1/bin/node  /root/yida-lize-property/batch/repair_manager_daily_message.js  2>&1 >>  /tmp/repair_manager_daily_message.log
+*/5 * * * * /root/.nvm/versions/node/v8.9.1/bin/node  /root/yida-lize-property/batch/repair_team_expire_minute_message.js  2>&1 >>  /tmp/repair_team_expire_minute_message.log
+```
+* 发布到服务器
+```sh
+rsync -avz --delete --exclude excel/ --exclude public/avatars/ --exclude node_modules/ --exclude .git /works/projects/yida/server/ yidalize_no2:/root/test-yida-lize-property/
+```

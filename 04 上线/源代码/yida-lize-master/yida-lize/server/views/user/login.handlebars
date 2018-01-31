@@ -1,0 +1,77 @@
+<style>
+  .error {
+    color: red
+  }
+  .success {
+    color: green;
+  }
+</style>
+<div class="login-box">
+  <div class="login-logo">
+    <a href="{{{url 'dashboard.index'}}}" style="text-shadow: -1px -1px 0 #fff,1px 1px 0 #333,1px 1px 0 #444;">{{@root.config.title}}</a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">请输入您的用户账号和密码</p>
+    {{#if message}}
+      {{{message}}}
+    {{/if}}
+
+    <form action="{{{url 'login'}}}" method="post">
+      <div class="form-group has-feedback">
+        <input type="user" class="form-control" name="username" placeholder="Username">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password" placeholder="Password">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-8 form-group" style="padding-left: 0px;padding-right: 0px;">
+          <input type="captcha" class="form-control" name="captcha" placeholder="Captcha">
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4 form-group" id="captcha"></div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-8">
+        </div>
+        <!-- /.col -->
+        <div class="col-xs-4">
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+        </div>
+        <!-- /.col -->
+      </div>
+    </form>
+
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+{{#extend 'scripts'}}
+<script>
+    $().ready(function () {
+
+      $("#captcha").click(function () {
+        getCaptcha();
+      });
+
+      getCaptcha();
+    })
+
+    function getCaptcha() {
+      $.ajax({
+        url: '/captcha',
+        type: 'POST',
+        dataType: 'json',
+      })
+        .done(function (data) {
+          $('#captcha').html(data);
+        })
+        .fail(function (err) {
+          console.log("error", err);
+        })
+    }
+</script>
+{{/extend}}

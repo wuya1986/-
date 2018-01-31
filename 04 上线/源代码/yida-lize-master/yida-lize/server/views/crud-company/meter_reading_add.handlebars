@@ -1,0 +1,118 @@
+{{#if (isAllowed @root.session.permissions 'meter' 'add')}}
+<section class="content-header">
+  <h1>
+    新建水电煤抄表
+    <small>新建水电煤抄表</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'company.list'}}}">List</a></li>
+    <li class="active">新建水电煤抄表</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">水电煤抄表信息</h3>
+        </div>
+        <form action="/crud/post_meter_reading_add?meter_id={{meter._id}}" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">企业名称</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{meter.company.company_name}}" disabled />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">租用位置</label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" value="{{meter.company.floor}}" disabled />
+                  <span class="input-group-addon">层</span>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" value="{{meter.company.number}}" disabled />
+                  <span class="input-group-addon">号</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">表号</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{meter.meter_number}}" disabled />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">类型</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{meter.meter_type}}" disabled />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">位置</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" value="{{meter.meter_location}}" disabled />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">前次表数</label>
+              <div class="col-sm-9">
+                <input type="number" pattern="[0-9]*" step=0.01 class="form-control text-right" name="before_number" value="{{#if meter.meter_readings}}{{meter.meter_readings.0.this_number}}{{else}}0{{/if}}"  id="before_number" readonly />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">本次表数<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="number" pattern="[0-9]*" step=0.01 min="{{#if meter.meter_readings}}{{meter.meter_readings.0.this_number}}{{else}}0{{/if}}" class="form-control text-right" name="this_number" id="this_number" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">倍率<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="number" pattern="[0-9]*" class="form-control text-right" name="multiple" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">本期用量<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="number" pattern="[0-9]*" step=0.01 min="0" class="form-control text-right" name="this_usage" id="this_usage" required />
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '/crud/company/{{meter.company._id}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script> 
+  $(function() {
+    $('#this_number').change(function(){
+      const this_number = $('#this_number').val();
+      const before_number = $('#before_number').val();
+      $('#this_usage').val((this_number-before_number).toFixed(2));
+    });
+  });
+    $('form').on('submit', function () {
+        $("#btn_save").attr("disabled","true");
+        $("#i_save").addClass("fa-spin");
+    });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

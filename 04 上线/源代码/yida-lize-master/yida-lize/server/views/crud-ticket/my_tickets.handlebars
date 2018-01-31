@@ -1,0 +1,118 @@
+<section class="content-header">
+  <h1>
+    我的任务
+    <small>所有任务一览</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">任务</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box">
+        <div class="box-body table-responsive no-padding">
+          <input type="hidden" name="page" id="page" value="{{req.query.page}}" />
+          <table class="table table-hover">
+            <tr>
+              <th>内容</th>
+              <th>发起用户</th>
+              <th>进度</th>
+              <th>发起时间</th>
+            </tr>
+            {{#each list }}
+            <tr>
+              <td>
+                <a href="/crud/{{this.ticket_template._id}}/{{this._id}}">
+                  {{#if this.delete_flag}}
+                  <s>
+                    {{/if}}
+                    {{#if (eq this.progress '处理完毕')}}
+                    <i class="fa fa-ticket" aria-hidden="true"></i>
+                    {{else}}
+                    <i class="fa fa-ticket fa-spin" aria-hidden="true"></i>
+                    <b>
+                      {{/if}}
+                      {{{this.content}}}
+                      {{#if (eq this.progress '处理完毕')}}
+                      {{else}}
+                    </b>
+                    {{/if}}
+                    {{#if this.delete_flag}}
+                  </s>
+                  {{/if}}
+                </a>
+              </td>
+              <td>
+                <a href="/crud/user/{{this.from_user._id}}">
+                  <img src="{{avatar @root.config.file_url this.from_user.avatar}}" class="img-circle size25">
+                  {{this.from_user.fullname}}
+                </a>
+                <a href="/crud/admin/{{this.from_admin._id}}">
+                  <img src="{{avatar @root.config.file_url this.from_admin.avatar}}" class="img-circle size25">
+                  {{this.from_admin.fullname}}
+                </a>
+              </td>
+              <td>
+                {{this.progress}}
+              </td>
+              <td>
+                {{ymd create_date 'YYYY-MM-DD HH:mm:ss'}}</td>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+        <div class="box-footer clearfix">
+          {{{paginationView pagination}}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+ $(function () {
+   function search() {
+     var page = $('#page').val();
+     var keyword = $('#keyword').val();
+
+     var queryString = '/crud/my_tickets?a=1';
+     if (page) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&page=' + page;
+       } else {
+         queryString += '?page=' + page;
+       }
+     }
+     if (keyword) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&keyword=' + keyword;
+       } else {
+         queryString += '?keyword=' + keyword;
+       }
+     }
+
+     window.location.href = queryString;
+   }
+
+   $('.pageList').click(function(){
+     var $this = $(this);
+     var id = $this.data('id');
+     $('#page').val(id);
+     search();
+   });
+   $('.search').click(function(){
+     $('#page').val(1);
+     search();
+   });
+ });
+</script>
+{{/extend}}

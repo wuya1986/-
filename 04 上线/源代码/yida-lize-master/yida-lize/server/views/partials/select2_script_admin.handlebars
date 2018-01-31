@@ -1,0 +1,49 @@
+//admins
+function formatVideo (admin) {
+  if (admin.loading) return admin.fullname;
+  var markup = "<div class='select2-result-admin_title'>" + admin.text + "</div>";
+  return markup;
+}
+
+function formatVideoSelection (admin) {
+  if(admin._id=="") return "请选择一个admin";
+  var markup = "<div class='select2-result-admin_title'>" + admin.text + "</div>";
+  return markup;
+}
+
+$(".js-data-admin-ajax").select2({
+  ajax: {
+    url: '/crud/admins_json',
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        keyword: params.term, // search term
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      var pagination = data.pagination;
+      var data = $.map(data.models, function (obj) {
+        obj.id = obj._id;
+        obj.text = obj.fullname;
+
+        return obj;
+      });
+      params.page = params.page || 1;
+
+      return {
+        results: data,
+        pagination: {
+          more: (params.page * 30) < pagination.total_count
+        }
+      };
+    },
+    cache: true
+  },
+  placeholder: "",
+  escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+  minimumInputLength: 2,
+  templateResult: formatVideo, // omitted for brevity, see the source of this page
+  templateSelection: formatVideoSelection // omitted for brevity, see the source of this page
+});

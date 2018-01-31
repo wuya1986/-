@@ -1,0 +1,147 @@
+{{#if (isAllowed @root.session.permissions 'message' 'list')}}
+<section class="content-header">
+  <h1>
+    消息
+    <small></small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">消息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box">
+        <div class="box-header search-area">
+        {{#if (isAllowed @root.session.permissions 'message' 'add')}}
+        <a href="/crud/message/new" class="btn btn-xs btn-success">
+          <i class="fa fa-pencil"></i>
+          新建
+        </a>
+        {{/if}}
+          <div class="box-tools">
+            <form class="input-group input-group-sm" style="width: 150px;">
+              <input type="hidden" name="page" id="page" value="{{req.query.page}}" />
+              <input type="text" id="keyword" name="keyword" class="form-control pull-right" placeholder="Search" value="{{req.query.keyword}}"/>
+
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default search"><i class="fa fa-search"></i></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="box-body table-responsive no-padding">
+          <table class="table table-hover">
+            <tr>
+              <th>业务</th>
+              <th>内容</th>
+              <th>发送者</th>
+              <th>接收者</th>
+              <th>通知时间</th>
+            </tr>
+            {{#each list }}
+            <tr>
+              <td>
+                {{#if business_type}}
+                <a href="/crud/{{business_type._id}}s">
+                  {{business_type.title}}
+                </a>
+                {{/if}}
+              </td>
+              <td>
+                <a href="/crud/chat?from_admin_id={{from_admin._id}}&to_admin_id={{to_admin._id}}&from_user_id={{from_user._id}}&to_user_id={{to_user._id}}&business_type={{business_type._id}}">
+                  {{content}}
+                </a>
+              </td>
+              <td>
+                <a href="/crud/admin/{{from_admin._id}}">
+                  {{#if from_admin.avatar}}
+                  <img src="{{avatar @root.config.file_url from_admin.avatar}}" class="img-circle size25">
+                  {{/if}}
+                  {{from_admin.fullname}}
+                </a>
+                <a href="/crud/user/{{from_user._id}}">
+                  {{#if from_user.avatar}}
+                  <img src="{{avatar @root.config.file_url from_user.avatar}}" class="img-circle size25">
+                  {{/if}}
+                  {{from_user.fullname}}
+                </a>
+              </td>
+              <td>
+                <a href="/crud/admin/{{to_admin._id}}">
+                  {{#if to_admin.avatar}}
+                  <img src="{{avatar @root.config.file_url to_admin.avatar}}" class="img-circle size25">
+                  {{/if}}
+                  {{to_admin.fullname}}
+                </a>
+                <a href="/crud/user/{{to_user._id}}">
+                  {{#if to_user.avatar}}
+                  <img src="{{avatar @root.config.file_url to_user.avatar}}" class="img-circle size25">
+                  {{/if}}
+                  {{to_user.fullname}}
+                </a>
+              </td>
+              <td>
+                {{ymd create_date 'YYYY-MM-DD HH:mm:ss'}}</td>
+              </td>
+            </tr>
+            {{/each}}
+          </table>
+        </div>
+        <div class="box-footer clearfix">
+          {{{paginationView pagination}}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+ $(function () {
+   function search() {
+     var page = $('#page').val();
+     var keyword = $('#keyword').val();
+
+     var queryString = '/crud/messages?a=1';
+     if (page) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&page=' + page;
+       } else {
+         queryString += '?page=' + page;
+       }
+     }
+     if (keyword) {
+       if (queryString.indexOf('?') >= 0) {
+         queryString += '&keyword=' + keyword;
+       } else {
+         queryString += '?keyword=' + keyword;
+       }
+     }
+
+     window.location.href = queryString;
+   }
+
+   $('.pageList').click(function(){
+     var $this = $(this);
+     var id = $this.data('id');
+     $('#page').val(id);
+     search();
+   });
+   $('.search').click(function(){
+     $('#page').val(1);
+     search();
+   });
+ });
+</script>
+{{/extend}}
+
+{{else}}
+no premission
+{{/if}}

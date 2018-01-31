@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="box box-solid box-default">
+      <div class="box-header with-border">
+        <h3 class="box-title">管理员信息</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="box-body">
+        <p><b>账户:</b> {{data.username}}</p>
+        <p><b>身份证:</b> {{data.id_card}}</p>
+        <p><b>角色:</b> {{user_roles data.acl_roles}}</p>
+        <p><b>姓名:</b>
+          <img src="{{avatar @root.config.file_url data.avatar}}" class="img-circle size25">
+          {{data.fullname}}
+        </p>
+        <p><b>是否有效:</b> {{delete_flag data.delete_flag}}</p>
+        <p><b>备注:</b> {{{data.memo}}}</p>
+
+
+        {{#if data.parent_admin}}
+        <p><b>上级管理员</b>
+          <a href="/crud/admin/{{data.parent_admin._id}}">
+            {{data.parent_admin.username}}
+          </a>
+        </p>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,184 @@
+{{#if (isAllowed @root.session.permissions 'company' 'edit')}}
+<section class="content-header">
+  <h1>
+    编辑企业信息
+    <small>编辑企业信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'company.list'}}}">List</a></li>
+    <li class="active">编辑企业信息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">企业信息</h3>
+        </div>
+        <form action="/crud/company/{{data._id}}?_method=put" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">企业名称<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[company_name]" value="{{data.company_name}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">租用位置<span class="required_input">*</span></label>
+              <div class="col-sm-4">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" name="company[floor]"  value="{{data.floor}}" required/>
+                  <span class="input-group-addon">层<span class="required_input">*</span></span>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                <div class="input-group">
+                  <input type="number" pattern="[0-9]*" class="form-control text-right" name="company[number]"  value="{{data.number}}" required/>
+                  <span class="input-group-addon">号<span class="required_input">*</span></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">产品名称</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[production]" value="{{data.production}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">产品性质</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[production_category]" value="{{data.production_category}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">行业类型</label>
+              <div class="col-sm-9">
+                <select class="form-control" name="company[category_type]" id="category_type">
+                  <option value="">-- 请选择 --</option>
+                  <optgroup label="金融"></optgroup>
+                  <option value="金融-保险证券">金融-保险证券</option>
+                  <option value="金融-基金信托保理">金融-基金信托保理</option>
+                  <option value="金融-专业服务">金融-专业服务</option>
+                  <option value="金融-其他">金融-其他</option>
+                  <optgroup label="IT及互联网"></optgroup>
+                  <option value="IT及互联网-金融科技">IT及互联网-金融科技</option>
+                  <option value="IT及互联网-互联网应用">IT及互联网-互联网应用</option>
+                  <option value="IT及互联网-信息传输与软件">IT及互联网-信息传输与软件</option>
+                  <option value="IT及互联网-技术研发转化">IT及互联网-技术研发转化</option>
+                  <option value="IT及互联网-其他">IT及互联网-其他</option> 
+                  <optgroup label="大健康"></optgroup>
+                  <option value="大健康-医药及器械">大健康-医药及器械</option>
+                  <option value="大健康—智慧医疗">大健康—智慧医疗</option>
+                  <option value="大健康—康复个护">大健康—康复个护</option>
+                  <option value="大健康—其他">大健康—其他</option>  
+                  <optgroup label="现代服务业"></optgroup>
+                  <option value="现代服务业—房地产">现代服务业—房地产</option>
+                  <option value="现代服务业—工程及工程咨询">现代服务业—工程及工程咨询</option>
+                  <option value="现代服务业—商贸">现代服务业—商贸</option>
+                  <option value="现代服务业—专业服务">现代服务业—专业服务</option>
+                  <option value="现代服务业—其他">现代服务业—其他</option> 
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">员工数</label>
+              <div class="col-sm-9">
+                <input type="text" pattern="\d*" class="form-control" name="company[employee_count]" value="{{data.employee_count}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">注册资金(万元)</label>
+              <div class="col-sm-9">
+                <input type="text" pattern="^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$" class="form-control" name="company[capital]" value="{{data.capital}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">法人代表</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[lega_person]" value="{{data.lega_person}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">成立日期</label>
+              <div class="col-sm-9">
+                <div class="input-group date">
+                  <input type="text" class="form-control" name="company[build_date]" value="{{ymd data.build_date 'YYYY-MM-DD'}}"/>
+                  <span class="input-group-addon"><i class="fa fa-th"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">企业网址</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[website]" value="{{data.website}}"/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">电表表号<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[meter_number]" value="{{data.meter_number}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">能耗类别<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[energy_type]" value="{{data.energy_type}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">电表位置<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="company[meter_location]" value="{{data.meter_location}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">无效/有效<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="company[delete_flag]" id="delete_flag" required>
+                  <option value="false">有效</option>
+                  <option value='true'>无效</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">其他</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="company[memo]">{{data.memo}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '/crud/company/{{data._id}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script> 
+  $(function () {
+    $('#delete_flag').select2().val("{{data.delete_flag}}").trigger('change');
+    $('#category_type').select2().val("{{data.category_type}}").trigger('change');
+    $('.input-group.date').datepicker({
+      language: "zh-CN",
+      format: "yyyy-mm-dd"
+    });
+  });
+    $('form').on('submit', function () {
+        $("#i_save").addClass("fa-spin");
+    });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

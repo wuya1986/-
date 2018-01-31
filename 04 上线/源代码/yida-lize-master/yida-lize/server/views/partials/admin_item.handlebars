@@ -1,0 +1,34 @@
+<tr>
+  <td>
+    <a href="/crud/admin/{{admin._id}}">
+      {{admin._id}}
+    </a>
+  </td>
+  <td>
+    <a href="/crud/admin/{{admin._id}}">
+      {{admin.username}}
+    </a>
+  </td>
+  <td>{{user_roles admin.acl_roles}}</td>
+  <td>
+    <a href="/crud/user/{{admin._id}}">
+      {{admin.fullname}}
+    </a>
+  </td>
+  {{#if actions}}
+  <td>
+    {{#if (isAllowed @root.session.permissions 'admin' 'edit')}}
+    <a href="/crud/admin/{{admin._id}}/edit" class="btn btn-xs btn-success">
+      <i class="glyphicon glyphicon-pencil"></i>
+      修改
+    </a>
+    {{/if}}
+    {{#if (isAllowed @root.session.permissions 'admin' 'delete')}}
+    <a href="#" class="btn btn-xs btn-danger" data-href="/crud/admin/{{admin.id}}?_method=delete">
+      <i class="glyphicon glyphicon-remove"></i>
+      删除
+    </a>
+    {{/if}}
+  </td>
+  {{/if}}
+</tr>

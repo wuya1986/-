@@ -1,0 +1,58 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">投诉类型</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="complaint_advice_type" name="form_data[complaint_advice_type]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >
+      <option value="物业服务人员">物业服务人员</option>
+      <option value="设施设备">设施设备</option>
+      <option value="安全保障">安全保障</option>
+      <option value="环境卫生">环境卫生</option>
+      <option value="施工噪音">施工噪音</option>
+      <option value="其它">其它</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">投诉内容</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[complaint_advice_content]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    > {{data.form_data.complaint_advice_content}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">修改建议</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[complaint_advice_proposal]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    > {{data.form_data.complaint_advice_proposal}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">处理结果</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[complaint_advice_result]"
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '处理投诉') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    > {{data.form_data.complaint_advice_result}}</textarea>
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $("#complaint_advice_type").val('{{data.form_data.complaint_advice_type}}');
+ });
+</script>
+{{/extend}}

@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-md-9">
+      {{#foreach list.contents}}
+        <div class="media">
+          {{#if thumbnail}}
+            <div class="media-left">
+              <img class="media-object" src="{{thumbnail.src}}" title="{{thumbnail.fileName}}" alt="{{thumbnail.description}}" width="100">
+            </div>
+          {{/if}}
+          <div class="text-muted" style="display:table-cell;width: 80%">
+            <h4 class="media-heading" style="line-height: 20px;height: 20px;text-overflow: ellipsis;overflow: hidden;"><a href="{{url}}" title="{{title}}" target="_blank">{{title}}</a></h4>
+            {{#if abstract}}
+              <p style="margin:0">{{abstract}}</p>
+            {{/if}}
+          </div>
+        </div>
+        <hr>
+      {{/foreach}}
+      <nav class="text-center">
+        <ul class="pagination">
+          {{#foreach list.pagination}}
+            <li {{#if active}}class="active"{{/if}}>
+              <a href="{{url}}">{{name}}</a>
+            </li>
+          {{/foreach}}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

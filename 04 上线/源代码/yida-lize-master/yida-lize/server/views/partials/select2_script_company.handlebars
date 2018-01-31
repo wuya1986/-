@@ -1,0 +1,49 @@
+//companys
+function formatCompany (company) {
+  if (company.loading) return company.text;
+  var markup = "<div class='select2-result-company-title'>" + company.company_name + "</div>";
+  return markup;
+}
+
+function formatCompanySelection (company) {
+  if(company.id=="") return "请输入企业名称";
+  return "<div class='select2-result-company-title'>" + company.text + "</div>";
+}
+
+$(".js-data-company-ajax").select2({
+  ajax: {
+    url: '/utils/companys_json',
+    dataType: 'json',
+    delay: 250,
+    data: function (params) {
+      return {
+        keyword: params.term,
+        page: params.page
+      };
+    },
+    processResults: function (data, params) {
+      var pagination = data.pagination;
+      var data = $.map(data.models, function (obj) {
+        obj.id = obj.id || obj._id;
+        obj.text = obj.text || obj.company_name;
+
+        return obj;
+      });
+
+      params.page = params.page || 1;
+
+      return {
+        results: data,
+        pagination: {
+          more: (params.page * 30) < pagination.total_count
+        }
+      };
+    },
+    cache: true
+  },
+  placeholder: "",
+  escapeMarkup: function (markup) { return markup; },
+  minimumInputLength: 1,
+  templateResult: formatCompany,
+  templateSelection: formatCompanySelection
+});

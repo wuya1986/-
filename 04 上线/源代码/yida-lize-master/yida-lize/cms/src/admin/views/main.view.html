@@ -1,0 +1,57 @@
+<nd-navigation></nd-navigation>
+<article ui-view class="page view clearfix">
+  <div class="page-header clearfix">
+    <ol class="heading">
+      <li><a ui-sref="main">控制面板</a></li>
+    </ol>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row text-center">
+            <div class="col-xs-4"><h4>{{contentsTotal}}</h4><p>总内容数</p></div>
+            <div class="col-xs-4"><h4>{{mediaTotal}}</h4><p>总媒体数</p></div>
+            <div class="col-xs-4"><h4>{{adminsTotal}}</h4><p>作者数</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">总排行</div>
+            <div class="list-group">
+              <a ng-repeat="item in readingList.total" href="{{item.href}}" class="list-group-item" target="_blank">{{item.title}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">今日排行</div>
+            <div class="list-group">
+              <a ng-repeat="item in readingList.day" href="{{item.href}}" class="list-group-item" target="_blank">{{item.title}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">本周排行</div>
+            <div class="list-group">
+              <a ng-repeat="item in readingList.week" href="{{item.href}}" class="list-group-item" target="_blank">{{item.title}}</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">本月排行</div>
+            <div class="list-group">
+              <a ng-repeat="item in readingList.month" href="{{item.href}}" class="list-group-item" target="_blank">{{item.title}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

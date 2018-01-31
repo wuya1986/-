@@ -1,0 +1,71 @@
+{{#if (or (isAllowed @root.session.permissions 'admin' 'show') (about_eq @root.session.user._id data._id))}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>管理员基本信息</h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'admin.list'}}}">List</a></li>
+    <li class="active">管理员信息</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (or (isAllowed @root.session.permissions 'admin' 'edit') (about_eq @root.session.user._id data._id))}}
+        <a href="/crud/admin/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'admin' 'delete')}}
+        <a href="#" data-href="/crud/admin/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'admin' 'show')}}
+        <a href="/crud/chat?from_admin_id={{@root.session.user._id}}&to_admin_id={{data._id}}" class="btn btn-sm btn-warning">
+          <i class="fa fa-paper-plane"></i>
+          发消息
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{> section_admin data=data}}
+</section>
+<!-- /.content -->
+{{#extend 'scripts'}}
+<script>
+ (function($) {
+     // Delete user button
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "bottom",
+      title: "确定要删除此数据吗?",
+            btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+          if (response.success)
+              window.location.href = '/crud/admins';
+          else
+              location.reload();
+        });
+      },
+  });
+ })(jQuery)
+</script>
+{{/extend}}
+
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

@@ -1,0 +1,116 @@
+{{#if (isAllowed @root.session.permissions 'ticket_template' 'edit')}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    编辑工作票模版信息
+    <small>编辑工作票模版信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'ticket_template.list'}}}">List</a></li>
+    <li class="active">编辑工作票模版信息</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-8">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">工作票模版信息</h3>
+        </div>
+        <!-- form -->
+        <form action="/crud/ticket_template/{{data._id}}?_method=put" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">ID<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="ticketTemplate[_ud]" placeholder="名称" value="{{data._id}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">名称<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="ticketTemplate[title]" placeholder="名称" value="{{data.title}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">进度定义</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="ticketTemplate[progress_extensions]" rows="6">{{toJSON data.progress_extensions}}</textarea>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">特殊进度定义</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="ticketTemplate[progress_redirects]" rows="6">{{toJSON data.progress_redirects}}</textarea>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">数据模版</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <span class="input-group-addon">{{@root.config.views.partials}}</span>
+                  <input type="text" class="form-control" name="ticketTemplate[form_file]" value="{{data.form_file}}"/>
+                  <span class="input-group-addon">.handlebars</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">打印模版</label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <span class="input-group-addon">{{@root.config.views.excels}}</span>
+                  <input type="text" class="form-control" name="ticketTemplate[excel_file]" value="{{data.excel_file}}"/>
+                  <span class="input-group-addon">.xlsx</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">用户端使用方法说明</label>
+              <div class="col-sm-9">
+                <textarea class="form-control textarea" name="ticketTemplate[user_guide]" rows="6">{{data.user_guide}}</textarea>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">工作推进方法说明</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="ticketTemplate[admin_guide]" rows="6">{{data.admin_guide}}</textarea>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '/crud/ticket_template/{{data._id}}'">取消</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+        <!-- /form -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col-md-6 -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.section -->
+{{#extend 'scripts'}}
+<script>  
+ $(function(){
+   $(".textarea").wysihtml5();
+ });
+  $('form').on('submit', function () {
+      $("#i_save").addClass("fa-spin");
+  });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

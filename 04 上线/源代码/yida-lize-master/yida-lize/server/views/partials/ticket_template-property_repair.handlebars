@@ -1,0 +1,119 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[property_repair_company_name]" value="{{data.form_data.property_repair_company_name}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">报修人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[property_repair_user]" value="{{data.form_data.property_repair_user}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">报修内容</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[property_repair_content]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}
+    > {{data.form_data.property_repair_content}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">材料费</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="property_repair_material_type" name="form_data[property_repair_material_type]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '上门检修') (intersection @root.session.user.acl_roles '["repair_manager", "repair_team"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >
+      <option value="无需配件">无需配件</option>
+      <option value="物业代购配件">物业代购配件</option>
+      <option value="租户自备">租户自备</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">配件名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[property_repair_material_name]" value="{{data.form_data.property_repair_material_name}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '上门检修') (intersection @root.session.user.acl_roles '["repair_manager", "repair_team"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">配件数量</label>
+  <div class="col-sm-5">
+    <input type="number" pattern="[0-9]*" class="form-control text-right" class="form-control" name="form_data[property_repair_material_total]" value="{{data.form_data.property_repair_material_total}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '上门检修') (intersection @root.session.user.acl_roles '["repair_manager", "repair_team"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工时</label>
+  <div class="col-sm-5">
+    <input type="number" pattern="[0-9]*" class="form-control text-right" class="form-control" name="form_data[property_repair_time]" value="{{data.form_data.property_repair_time}}"
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '上门检修') (intersection @root.session.user.acl_roles '["repair_manager", "repair_team"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-12 control-label">提示：人工费：25元/小时/人，不足一小时按照一小时收费</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-12 control-label">提示：如需收费需要和工程经理确认是否施工</label>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">处理结果</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[property_repair_result]" required
+              {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '维修施工') (intersection @root.session.user.acl_roles '["repair_manager", "repair_team"]')))}}
+              {{else}}
+              disabled
+              {{/if}}
+    > {{data.form_data.property_repair_result}}</textarea>
+  </div>
+</div>
+{{#if (and (or (eq data.progress '接单或派单') (eq data.progress '任务接单')) (intersection @root.session.user.acl_roles '["ticket_manager" , "repair_manager", "repair_team"]'))}}
+<div class="form-group form">
+  <label class="col-sm-3 control-label">指派</label>
+  <div class="col-sm-5">
+    <!--维修人员只能选择自己，工程经理可以选择所有维修人员-->
+    <select class="form-control" id="property_repair_admin" name="form_data[property_repair_admin]" required
+    >
+    {{#if (and (or (eq data.progress '接单或派单') (eq data.progress '任务接单')) (intersection @root.session.user.acl_roles '["repair_team"]'))}}
+      <option value="{{@root.session.user._id}}">{{@root.session.user.fullname}}</option>
+    {{else}}
+      {{#each admins }}
+      <option value="{{_id}}">{{fullname}}</option>
+      {{/each}}
+    {{/if}}
+    </select>
+  </div>
+</div>
+{{/if}}
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $("#property_repair_type").val('{{data.form_data.property_repair_type}}');
+   $("#property_repair_admin").val('{{data.form_data.property_repair_admin}}');
+ });
+</script>
+{{/extend}}

@@ -1,0 +1,88 @@
+      <header class="main-header">
+        <!-- Logo -->
+        <a href="{{{url 'dashboard.index'}}}" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>亿</b>达</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>{{@root.app.zone.title}}</b></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Sidebar toggle button-->
+          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <!-- Notifications: style can be found in dropdown.less -->
+              <li class="dropdown notifications-menu">
+                <a href="/crud/my_messages">
+                  <i class="fa fa-bell-o"></i>
+                  <span id="messages_length" class="label label-warning"></span>
+                  通知
+                </a>
+              </li>
+              <!-- Tasks: style can be found in dropdown.less -->
+              <li class="dropdown tasks-menu">
+                <a href="/crud/my_tickets">
+                  <i class="fa fa-flag-o"></i>
+                  <span id="tickets_length" class="label label-info"></span>
+                  任务
+                </a>
+              </li>
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="{{avatar @root.config.file_url @root.session.user.avatar}}" class="user-image" alt="头像">
+                  <span class="hidden-xs">{{@root.session.user.fullname}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="{{avatar @root.config.file_url @root.session.user.avatar}}" class="img-circle" alt="User Image">
+                    <p>
+                      {{@root.session.user.fullname}} - {{@root.session.user.city}}
+                      <small>Member since {{ymd @root.session.user.create_date 'YYYY-MM-DD'}}</small>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="/crud/admin/{{@root.session.user._id}}" class="btn btn-default btn-flat">个人信息 & 用户列表</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="{{{url 'logout'}}}" class="btn btn-default btn-flat">退出登录</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      {{#extend 'scripts'}}
+      <script>
+       $(function() {
+         //messages.length
+         //tickets.length
+         $.ajax({
+           dataType: 'json',
+           url: '/staff-badge/data',
+         }).then(function(res) {
+           if (res.success) {
+             $('#messages_length').text(res.data.mine.messages);
+             $('#tickets_length').text(res.data.mine.tickets);
+             for (var i = 0, len = res.data.applications.length; i < len; i++) {
+               var application = res.data.applications[i];
+
+               $('#badge_' + application._id).text(application.count);
+
+             }
+           }
+         });
+       });
+      </script>
+      {{/extend}}

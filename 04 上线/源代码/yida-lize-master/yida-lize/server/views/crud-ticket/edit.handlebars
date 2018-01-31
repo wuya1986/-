@@ -1,0 +1,123 @@
+{{#if (isAllowed @root.session.permissions ticketTemplate._id 'edit')}}
+{{#extend 'styles'}}
+{{/extend}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    编辑工作票信息
+    <small>编辑工作票信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">编辑 {{ticketTemplate.title}} 工作票信息</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-10">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">工作票信息</h3>
+        </div>
+        <!-- form -->
+        <form action="/crud/{{ticketTemplate._id}}/{{data._id}}?_method=put" method="post">
+          <input type="hidden" name="ticket[ticket_template]" value="{{ticketTemplate._id}}">
+          <div class="box-body">
+            {{#if data.from_user}}
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">发起用户</label>
+              <div class="col-sm-9">
+                <a href="/crud/company/{{data.from_user._id}}">
+                  {{data.from_user.fullname}}
+                </a>
+              </div>
+            </div>
+            {{/if}}
+            {{#if data.company}}
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">关联企业</label>
+              <div class="col-sm-9">
+                <a href="/crud/company/{{data.company._id}}">
+                  {{data.company.company_name}}
+                </a>
+              </div>
+            </div>
+            {{/if}}
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">当前进度<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select id="progress" class="js-data-progress-ajax form-control" style="width: 50%" name="ticket[progress]"  required>
+                  {{#each data.ticket_template.progress_extensions }}
+                  <option value="{{this.step}}">{{this.step}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">内容</label>
+              <div class="col-sm-9">
+                <textarea class="form-control textarea" name="ticket[content]" rows="6">{{data.content}}</textarea>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">无效/有效<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select class="form-control" name="ticket[delete_flag]" id="delete_flag" required>
+                  <option value="false">有效</option>
+                  <option value="true">无效</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+        <!-- /form -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col-md-6 -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.section -->
+{{#extend 'scripts'}}
+<script>  
+ $(function(){
+   $('#delete_flag').select2().val("{{data.delete_flag}}").trigger('change');
+   $("#progress").select2().val("{{data.progress}}").trigger('change');
+
+   $(".textarea").wysihtml5();
+
+   $(".js-data-ticket_template-ajax").select2().val([
+     '{{data.ticket_template._id}}',
+   ]).trigger('change');
+
+   {{> select2_script_user }}
+   {{#if data.from_user}}
+   var newOption = new Option('{{data.from_user.fullname}}', '{{data.from_user._id}}', false, false);
+   $('#users').append(newOption).val('{{data.from_user._id}}').trigger('change');
+   {{/if}}
+
+   {{> select2_script_admin}}
+ });
+    $('form').on('submit', function () {
+        $("#i_save").addClass("fa-spin");
+    });
+</script>
+{{/extend}}
+
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

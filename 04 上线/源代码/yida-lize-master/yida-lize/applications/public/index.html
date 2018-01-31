@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Applications</title>
+    <meta name="description" content="Google's material design UI components built with React." />
+
+    <!-- Use minimum-scale=1 to enable GPU rasterization -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1, minimum-scale=1"
+      />
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+    <link rel="stylesheet" type="text/css" href="/cms.css" />
+    <link rel="stylesheet" type="text/css" href="/weui.min.css" />
+    <link rel="stylesheet" type="text/css" href="/react-weui.css" />
+    <script data-pace-options='{ "ajax": false }' src="/pace.min.js"></script>
+    <script src="//res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <link href="/pace.css" rel="stylesheet" />
+  </head>
+  <script>
+   // 用户sign
+   var isWeixinBrowser = (/micromessenger/i).test(navigator.userAgent);
+   var g_token = window.location.href.replace('?', '&').split('&').reduce((s, c) => { const t = c.split('='); s[t[0]] = t[1]; return s; }, {}).token;
+
+   if (g_token) {
+     localStorage.setItem('g_token', g_token);
+   } else if (!localStorage.getItem('g_token') && isWeixinBrowser) {
+     window.location = 'http://admin.yidalize.com/redirect_oauth?gourl=' + encodeURIComponent(window.location);
+   }
+  </script>
+  <body>
+    <div id="app" style="height: 100%">
+    </div>
+  </body>
+</html>

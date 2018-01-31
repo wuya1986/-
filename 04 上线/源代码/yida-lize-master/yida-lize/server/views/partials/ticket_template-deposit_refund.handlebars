@@ -1,0 +1,674 @@
+{{#extend 'styles'}}
+<link rel="stylesheet" href="{{@root.config.aliyun.cdn_prefix}}/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+{{/extend}}
+<div class="box-header with-border">
+  <h3 class="box-title">基本信息</h3>
+</div>
+<div class="box-body">
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工类别</label>
+    <div class="col-sm-9">
+      <select class="form-control" id="deposit_refund_type" name="form_data[deposit_refund_type]" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}>
+        <option value="租户装修">租户装修</option>
+        <option value="项目委托施工">项目委托施工</option>
+        <option value="外部单位项目内施工">外部单位项目内施工</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工位置</label>
+    <div class="col-sm-4">
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[deposit_refund_floor]" value="{{data.form_data.deposit_refund_floor}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">层</span>
+      </div>
+    </div>
+    <div class="col-sm-5">
+      <div class="input-group">
+        <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[deposit_refund_number]" value="{{data.form_data.deposit_refund_number}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">号</span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label"></label>
+    <div class="col-sm-9">
+      <div class="input-group">
+        <input type="text" class="form-control text-right" name="form_data[deposit_refund_area]" value="{{data.form_data.deposit_refund_area}}" required
+        {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+        {{else}}
+        disabled
+        {{/if}}/>
+        <span class="input-group-addon">区域</span>
+      </div>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">租户/安排施工单位名称</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[deposit_refund_tenantry_unit_name]"  value="{{data.form_data.deposit_refund_tenantry_unit_name}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系人</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[deposit_refund_tenantry_contact]" value="{{data.form_data.deposit_refund_tenantry_contact}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[deposit_refund_tenantry_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.deposit_refund_tenantry_tel}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">电费承担</label>
+    <div class="col-sm-9">
+      <select class="form-control" id="deposit_refund_afford_expense" name="form_data[deposit_refund_afford_expense]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}>
+        <option value="施工单位">施工单位</option>
+        <option value="租户">租户</option>
+        <option value="项目部">项目部</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">承担方确认</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[deposit_refund_afford_expense_approved]" value="{{data.form_data.deposit_refund_afford_expense_approved}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">施工单位名称</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[deposit_refund_construction_unit_name]"  value="{{data.form_data.deposit_refund_construction_unit_name}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系人</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="form_data[deposit_refund_construction_contact]" value="{{data.form_data.deposit_refund_construction_contact}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="form-group form">
+    <label class="col-sm-3 control-label">联系电话</label>
+    <div class="col-sm-9">
+      <input type="tel" class="form-control" name="form_data[deposit_refund_construction_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.deposit_refund_construction_tel}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    </div>
+  </div>
+  <div class="box-header with-border">
+    <h3 class="box-title">确认信息</h3>
+  </div>
+  <div class="box-body">
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">已附《施工竣工验收表》</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_repair_approved" name="form_data[deposit_refund_repair_approved]" required
+          {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">已提交完整竣工图纸</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_drawing_approved_1" name="form_data[deposit_refund_drawing_approved_1]" required
+          {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">已拆除围挡及成品保护</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_remove_approved" name="form_data[deposit_refund_remove_approved]" required
+          {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">周边无公共区域损坏情形</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_periphery_approved" name="form_data[deposit_refund_periphery_approved]" required
+          {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">工程部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_repair_approved_manager]" {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} value="{{#if data.form_data.deposit_refund_repair_approved_manager}}{{data.form_data.deposit_refund_repair_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_repair_approved_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">工程部经理审批日期</label>
+      <div class="col-sm-6">
+        <div class="input-group date">
+          <input type="text" class="form-control" name="form_data[deposit_refund_repair_approved_date]" required
+            {{#if (and (eq data.progress '工程经理审批') (intersection @root.session.user.acl_roles '["repair_manager"]'))}}
+            value="{{#if data.form_data.deposit_refund_repair_approved_date}}{{ymd data.form_data.deposit_refund_repair_approved_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+            {{else}}
+            value="{{ymd data.form_data.deposit_refund_repair_approved_date 'YYYY-MM-DD'}}"
+            disabled
+            {{/if}} />
+          <span class="input-group-addon"><i class="fa fa-th"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">已提交完整竣工图纸</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_drawing_approved_2" name="form_data[deposit_refund_drawing_approved_2]" required
+          {{#if (and (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">对消防、监控、安防系统无损坏情形</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_fire_approved" name="form_data[deposit_refund_fire_approved]" required
+          {{#if (and (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">安保部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_security_approved_manager]" {{#if (and (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]'))}} value="{{#if data.form_data.deposit_refund_security_approved_manager}}{{data.form_data.deposit_refund_security_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_security_approved_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">安保部经理审批日期</label>
+      <div class="col-sm-6">
+        <div class="input-group date">
+          <input type="text" class="form-control" name="form_data[deposit_refund_security_approved_date]" required
+            {{#if (and (eq data.progress '安保经理审批') (intersection @root.session.user.acl_roles '["security_manager"]'))}}
+            value="{{#if data.form_data.deposit_refund_security_approved_date}}{{ymd data.form_data.deposit_refund_security_approved_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+            {{else}}
+            value="{{ymd data.form_data.deposit_refund_security_approved_date 'YYYY-MM-DD'}}"
+            disabled
+            {{/if}} />
+          <span class="input-group-addon"><i class="fa fa-th"></i></span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">已集中退还一卡通（不再单独办理）</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_card_approved" name="form_data[deposit_refund_card_approved]" required
+          {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">周边环境无污染、无占用</label>
+      <div class="col-sm-6">
+        <select class="form-control" id="deposit_refund_contaminated_approved" name="form_data[deposit_refund_contaminated_approved]" required
+          {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          {{else}}
+          disabled
+          {{/if}}
+        >
+          <option value="未确认">未确认</option>
+          <option value="确认">确认</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">运营服务部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_building_approved_manager]" {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}} value="{{#if data.form_data.deposit_refund_building_approved_manager}}{{data.form_data.deposit_refund_building_approved_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_building_approved_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">运营服务部经理审批日期</label>
+      <div class="col-sm-6">
+        <div class="input-group date">
+          <input type="text" class="form-control" name="form_data[deposit_refund_building_approved_date]" required
+          {{#if (and (eq data.progress '运营经理审批') (intersection @root.session.user.acl_roles '["building_manager"]'))}}
+          value="{{#if data.form_data.deposit_refund_building_approved_date}}{{ymd data.form_data.deposit_refund_building_approved_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+          {{else}}
+          value="{{ymd data.form_data.deposit_refund_building_approved_date 'YYYY-MM-DD'}}"
+          disabled
+          {{/if}} />
+          <span class="input-group-addon"><i class="fa fa-th"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-header with-border">
+    <h3 class="box-title">结算信息</h3>
+  </div>
+  <div class="box-body">
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">装修履约保证金</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[deposit_amount]" value="{{data.form_data.deposit_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[deposit_return_amount]" value="{{data.form_data.deposit_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text" class="form-control text-right" name="form_data[deposit_amount_memo]" value="{{data.form_data.deposit_amount_memo}}" 
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">施工人员一卡通</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[card_amount]" value="{{data.form_data.card_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[card_return_amount]" value="{{data.form_data.card_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">施工期间电费</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[electricity_fee_amount]" value="{{data.form_data.electricity_fee_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[electricity_fee_return_amount]" value="{{data.form_data.electricity_fee_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text" class="form-control text-right" name="form_data[electricity_fee_amount_memo]" value="{{data.form_data.electricity_fee_amount_memo}}" 
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">泄水费</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[drainage_fee_amount]" value="{{data.form_data.drainage_fee_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[drainage_fee_return_amount]" value="{{data.form_data.drainage_fee_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text" class="form-control text-right" name="form_data[drainage_fee_amount_memo]" value="{{data.form_data.drainage_fee_amount_memo}}" 
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">现场管理罚金</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[amercement_amount]" value="{{data.form_data.amercement_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[amercement_return_amount]" value="{{data.form_data.amercement_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text" class="form-control text-right" name="form_data[amercement_amount_memo]" value="{{data.form_data.amercement_amount_memo}}" 
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">设备设施损坏维修费</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[repair_fee_amount]" value="{{data.form_data.repair_fee_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">退还金额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[repair_fee_return_amount]" value="{{data.form_data.repair_fee_return_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="text" class="form-control text-right" name="form_data[repair_fee_amount_memo]" value="{{data.form_data.repair_fee_amount_memo}}" 
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label">结算金额</label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">缴费额</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[total_amount]" value="{{data.form_data.total_amount}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+          <span class="input-group-addon">元</span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-4 control-label"></label>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <span class="input-group-addon">备注</span>
+          <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[total_amount_memo]" value="{{data.form_data.total_amount_memo}}" required
+          {{#if (and  (eq data.progress '结算确认中') (intersection @root.session.user.acl_roles '["fee_confirmer"]'))}}
+          {{else}}
+          disabled
+          {{/if}}/>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-header with-border">
+    <h3 class="box-title">结算信息确认</h3>
+  </div>
+  <div class="box-body">
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">工程部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_repair_manager]" {{#if (and (eq data.progress '工程经理确认') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} value="{{#if data.form_data.deposit_refund_repair_manager}}{{data.form_data.deposit_refund_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_repair_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">安保部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_security_manager]" {{#if (and (eq data.progress '安保经理确认') (intersection @root.session.user.acl_roles '["security_manager"]'))}} value="{{#if data.form_data.deposit_refund_security_manager}}{{data.form_data.deposit_refund_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_security_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">运营服务部经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_building_manager]" {{#if (and (eq data.progress '运营经理确认') (intersection @root.session.user.acl_roles '["building_manager"]'))}} value="{{#if data.form_data.deposit_refund_building_manager}}{{data.form_data.deposit_refund_building_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_building_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">财务总监</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_fee_confirmer]" {{#if (and (eq data.progress '财务总监确认') (intersection @root.session.user.acl_roles '["finace_staff"]'))}} value="{{#if data.form_data.deposit_refund_fee_confirmer}}{{data.form_data.deposit_refund_fee_confirmer}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_fee_confirmer}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+    <div class="form-group form">
+      <label class="col-sm-6 control-label">项目总经理</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" name="form_data[deposit_refund_chief_manager]" {{#if (and (eq data.progress '项目经理确认') (intersection @root.session.user.acl_roles '["chief_manager"]'))}} value="{{#if data.form_data.deposit_refund_chief_manager}}{{data.form_data.deposit_refund_chief_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+        {{else}}
+        value="{{data.form_data.deposit_refund_chief_manager}}"
+        disabled
+        {{/if}} />
+      </div>
+    </div>
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+$(function() {
+  $('.input-group.date').datepicker({
+    language: "zh-CN",
+    format: "yyyy-mm-dd"
+  });
+  $("#deposit_refund_type").val('{{data.form_data.deposit_refund_type}}');
+  $("#deposit_refund_afford_expense").val('{{data.form_data.deposit_refund_afford_expense}}');
+  $("#deposit_refund_repair_approved").val('{{data.form_data.deposit_refund_repair_approved}}');
+  $("#deposit_refund_drawing_approved_1").val('{{data.form_data.deposit_refund_drawing_approved_1}}');
+  $("#deposit_refund_remove_approved").val('{{data.form_data.deposit_refund_remove_approved}}');
+  $("#deposit_refund_periphery_approved").val('{{data.form_data.deposit_refund_periphery_approved}}');
+  $("#deposit_refund_drawing_approved_2").val('{{data.form_data.deposit_refund_drawing_approved_2}}');
+  $("#deposit_refund_fire_approved").val('{{data.form_data.deposit_refund_fire_approved}}');
+  $("#deposit_refund_card_approved").val('{{data.form_data.deposit_refund_card_approved}}');
+  $("#deposit_refund_contaminated_approved").val('{{data.form_data.deposit_refund_contaminated_approved}}');
+});
+</script>
+{{/extend}}

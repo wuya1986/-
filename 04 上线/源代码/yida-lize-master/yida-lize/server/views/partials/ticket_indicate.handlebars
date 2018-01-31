@@ -1,0 +1,19 @@
+<ul class="timeline">
+  <li class="time-label">
+    <span class="bg-blue">
+      {{ticket_template_title}}
+    </span>
+  </li>
+  {{#each ticket_indicates}}
+  <li>
+    <i class="fa fa-circle {{#if (progress_gte ../data.progress this.progress ../data.ticket_template.progress_extensions)}}bg-orange{{else}}bg-gray{{/if}}"></i>
+    <div class="timeline-item">
+      <span class="time"><i class="fa fa-clock-o"></i> </span>
+      <h3 class="timeline-header">{{this.header}}</h3>
+      <div class="timeline-body">
+        {{this.body}}
+      </div>
+    </div>
+  </li>
+  {{/each}}
+</ul>

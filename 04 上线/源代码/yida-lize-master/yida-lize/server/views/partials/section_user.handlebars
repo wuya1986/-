@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="box box-solid box-default">
+      <div class="box-header with-border">
+        <h3 class="box-title">企业信息</h3>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse">
+            <i class="fa fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="box-body">
+        <p><b>姓名:</b>
+          <img src="{{avatar @root.config.file_url data.avatar}}" class="img-circle size25">
+          {{data.fullname}}
+        </p>
+        <p><b>性别:</b> {{sex_title data.sex}}</p>
+        <p><b>电话号码:</b> {{data.mobile_no}}</p>
+        <p><b>身份证号码:</b> {{data.id_card}}</p>
+        <p><b>一卡通号码:</b> {{data.e_card}}</p>
+        <p><b>身份标识:</b> {{data.role}}</p>
+        <p><b>所属企业:</b>
+          <a href="/crud/company/{{data.company._id}}">
+            {{data.company.company_name}}
+          </a>
+        </p>
+        <p><b>是否有效:</b> {{delete_flag data.delete_flag}}</p>
+        <p><b>创建日期:</b> {{ymd data.create_date 'YYYY-MM-DD'}}</p>
+        <p><b>备注:</b> {{{data.memo}}}
+      </div>
+    </div>
+  </div>
+</div>
+<div>

@@ -1,0 +1,120 @@
+{{#if (isAllowed @root.session.permissions 'admin' 'add')}}
+{{#extend 'styles'}}
+<!-- Select2 -->
+{{/extend}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    新建管理员
+    <small>输入管理员基本信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'admin.list'}}}">List</a></li>
+    <li class="active">新建Admin</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header search-area with-border">
+          <h3 class="box-title">管理员基本信息</h3>
+        </div>
+        <!-- form -->
+        <form action="{{{url 'admin.create'}}}" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">用户(登录用)<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="admin[username]" pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')" placeholder="请输入用户名" required />
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">密码<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <div class="input-group">
+                  <input type="password" class="form-control" name="admin[password]" placeholder="请输入密码" required />
+                  <span class="input-group-addon">
+                    <div id="strengthBar" class="progress-bar" style="width: 150px;" role="progressbar"></div>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">姓名<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="admin[fullname]" placeholder="姓名" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">身份证<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="admin[id_card]" placeholder="身份证" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">角色<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <select id="roles" class="js-data-roles-ajax form-control" multiple="multiple" style="width: 50%" name="admin[acl_roles]"  required>
+                  {{#each @root.config.acl.roles }}
+                  <option value="{{this.id}}">{{this.text}}</option>
+                  {{/each}}
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '{{{url "admin.list"}}}'">取消</button>
+          </div>
+          <!-- /.box-footer -->
+        </form>
+        <!-- /form -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col-md-6 -->
+  </div>
+  <!-- /.row -->
+</section>
+<!-- /.section -->
+
+{{#extend 'scripts'}}
+<!-- Select2 -->
+<script src="{{@root.config.aliyun.cdn_prefix}}/zxcvbn/4.4.1/zxcvbn.js"></script>
+<script> 
+ (function($) {
+     $(".js-data-roles-ajax").select2();
+     $(".js-data-buildings-ajax").select2();
+
+     var score_title = ['不好', '弱', '良', '很好', '强'];
+     var score_class = ['progress-bar-danger', 'progress-bar-danger', 'progress-bar-warning', 'progress-bar-warning', 'progress-bar-success'];
+     $(':password').keyup(function() {
+         var textValue = $(this).val();
+         var result = zxcvbn(textValue);
+         $.each(score_class, function (idx, value) {
+             $('#strengthBar').removeClass(value);
+         });
+         $('#strengthBar').html(score_title[result.score]).addClass(score_class[result.score]);
+     });
+
+ })(jQuery)
+    $('form').on('submit', function () {
+        $("#btn_save").attr("disabled","true");
+        $("#i_save").addClass("fa-spin");
+    });
+</script>
+{{/extend}}
+
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

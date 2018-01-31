@@ -1,0 +1,45 @@
+<div class="page-header">
+  <ol class="heading">
+    <li><a ui-sref="main.account">帐号设置</a></li>
+  </ol>
+</div>
+
+<form ng-submit="update()" class="form-horizontal" id="accountForm" name="accountForm" novalidate>
+  <div class="panel panel-default">
+    <div ng-class="{ 'clear-bottom-padding': !editAuth }" class="panel-body">
+      <div ng-class="{ 'has-error': accountForm.username.$touched  && accountForm.username.$invalid }" class="form-group has-feedback">
+        <label for="username" class="col-sm-2 control-label">* Username：</label>
+        <div class="col-sm-10">
+          <input ng-if="editAuth" ng-model="$parent.username" ng-pattern="/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/" nd-vusername="username && username !== oldUsername" ng-disabled="transmitting" type="username" class="form-control text-lowercase" id="username" name="username" describedby="vusernameStatus" placeholder="请输入 Username 地址" required>
+          <span ng-show="!accountForm.username.$error.pattern && checkUsernameing" class="form-control-feedback" aria-hidden="true"><i class="fa fa-refresh fa-spin"></i></span>
+          <span id="vusernameStatus" class="sr-only">(检测中)</span>
+          <p ng-show="accountForm.username.$touched && accountForm.username.$invalid && accountForm.username.$error.pattern" class="help-block">请正确输入 Username</p>
+          <p ng-show="!accountForm.username.$error.pattern && accountForm.username.$touched && accountForm.username.$invalid && accountForm.username.$error.vusername" class="help-block">该 Username 已被注册</p>
+          <p ng-if="!editAuth" class="form-control-static">{{username}}</p>
+        </div>
+      </div>
+      <div ng-class="{ 'has-error': accountForm.fullname.$touched && accountForm.fullname.$invalid }" class="form-group">
+        <label for="inputFullname" class="col-sm-2 control-label">* 昵称：</label>
+        <div class="col-sm-10">
+          <input ng-if="editAuth" ng-model="$parent.fullname" ng-disabled="transmitting" type="text" class="form-control" id="inputFullname" name="fullname" placeholder="请输入昵称" required>
+          <p ng-if="!editAuth" class="form-control-static">{{fullname}}</p>
+        </div>
+      </div>
+      <div ng-if="editAuth" ng-class="{ 'has-error': accountForm.password.$touched && accountForm.password.$invalid }" class="form-group">
+        <label for="inputPwd" class="col-sm-2 control-label">新密码：</label>
+        <div class="col-sm-10">
+          <input ng-model="$parent.password" ng-disabled="transmitting" ng-minlength="6" class="form-control" id="inputPwd" name="password" type="password" placeholder="请输入密码">
+          <p ng-show="accountForm.password.$touched && accountForm.password.$invalid && accountForm.password.$error.minlength" class="help-block">密码需为 6 位数以上</p>
+        </div>
+      </div>
+      <div ng-if="editAuth" ng-class="{ 'has-error': accountForm.confirmpwd.$touched && accountForm.confirmpwd.$invalid}" class="form-group">
+        <label for="inputConfirmpwd" class="col-sm-2 control-label">确认密码：</label>
+        <div class="col-sm-10">
+          <input ng-model="confirmpwd" ng-disabled="transmitting" nd-same="#inputPwd" class="form-control" id="inputConfirmpwd" name="confirmpwd" type="password" placeholder="请再次输入密码">
+          <p ng-show="accountForm.confirmpwd.$touched && accountForm.confirmpwd.$invalid && accountForm.confirmpwd.$error.same" class="help-block">两次密码输入不一致</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button ng-if="editAuth" ng-disabled="accountForm.$invalid || transmitting" class="btn btn-primary pull-right" type="submit"><i class="fa fa-save"></i> 保存设置</button>
+</form>

@@ -1,0 +1,7 @@
+>> db.admins.insert({ "username" : "6055120@qq.com", "id_card": "320323197808290618", "password" : "$2a$10$8pmfUnqXvuR5hnoMeDJzg.wpS79rROFySwtzys8wI2AsSeSUGc0uG", "create_date" : ISODate("2017-08-18T05:27:31.999Z"), "delete_flag" : false, "acl_roles" : [ "super_admin" ], "own_users" : [ ] });
+>> addUserRoles 6055120@qq.com super_admin
+>> db.admins.update({ username: '6055120@qq.com' }, { '$set': { password: '$2a$10$8pmfUnqXvuR5hnoMeDJzg.wpS79rROFySwtzys8wI2AsSeSUGc0uG', acl_roles: ['super_admin']} });
+
+db.users.update({  }, { '$set': {role: '访客' } }, {multi:true});
+
+db.tickettemplates.update({  }, { '$set': {progress_extensions: [{step: '已受理',roles: ['building_manager', 'building_service'],}, {step: '进行中',roles: ['building_manager', 'building_service'],}, {step: '处理完毕',roles: ['building_manager', 'building_service'],}] } }, {multi:true});

@@ -1,0 +1,82 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">访客姓名</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[batchly_visitor_name]" value="{{data.form_data.batchly_visitor_name}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">访问日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[batchly_visitor_date]" value="{{ymd data.form_data.batchly_visitor_date 'YYYY-MM-DD'}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">访问人数</label>
+  <div class="col-sm-9">
+    <input type="number" class="form-control" name="form_data[batchly_visitor_number]" value="{{data.form_data.batchly_visitor_number}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">来访目的</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[batchly_visitor_purpose]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >{{data.form_data.batchly_visitor_purpose}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">审批结果</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="batchly_visitor_result" name="form_data[batchly_visitor_result]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '信息审批') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+    >
+      <option value="批准">批准</option>
+      <option value="拒绝">拒绝</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">审批意见<span style="color:#F00"></span></label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[batchly_visitor_opinion]"
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '信息审批') (intersection @root.session.user.acl_roles '["building_manager", "building_service"]')))}}
+      {{else}}
+      disabled
+      {{/if}}
+    >{{data.form_data.batchly_visitor_opinion}}</textarea>
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+  $(function () {
+    $('.input-group.date').datepicker({
+      language: "zh-CN",
+      format: "yyyy-mm-dd"
+    });
+  });
+</script>
+{{/extend}}

@@ -1,0 +1,111 @@
+{{#if (isAllowed @root.session.permissions 'ticket_template' 'show')}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <h1>
+    工作票模版详细
+    <small>工作票模版详细信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'ticket_template.list'}}}">List</a></li>
+    <li class="active">工作票模版详细</li>
+  </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+  <div class="box">
+    <div class="box-header with-border">
+      <div class="widget-user-header">
+        {{#if (isAllowed @root.session.permissions 'ticket_template' 'edit')}}
+        <a href="/crud/ticket_template/{{data._id}}/edit" class="btn btn-sm btn-success">
+          <i class="fa fa-pencil"></i>
+          修改
+        </a>
+        {{/if}}
+        {{#if (isAllowed @root.session.permissions 'ticket_template' 'delete')}}
+        <a href="#" data-href="/crud/ticket_template/{{data._id}}?_method=delete" class="btn btn-sm btn-danger delete">
+          <i class="fa fa-remove"></i>
+          删除
+        </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">工作票模版信息</h3>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+              <i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="box-body">
+          <p><b>ID:</b>
+            {{data._id}}
+          </p>
+          <p><b>名称:</b>
+            {{data.title}}
+          </p>
+          <p><b>进度定义:</b>
+            {{toJSON data.progress_extensions}}
+          </p>
+          <p><b>特殊进度定义:</b>
+            {{toJSON data.progress_redirects}}
+          </p>
+          {{#if data.form_file}}
+          <p><b>数据模版:</b>
+            {{@root.config.views.partials}}{{{data.form_file}}}.handlebars
+          </p>
+          {{/if}}
+          {{#if data.excel_file}}
+          <p><b>打印模版:</b>
+            <a href="{{@root.config.views.excels}}{{{data.excel_file}}}.xlsx">
+              {{@root.config.views.excels}}{{{data.excel_file}}}.xlsx
+            </a>
+          </p>
+          {{/if}}
+          <p><b>用户端使用方法说明:</b>
+            {{{data.user_guide}}}
+          </p>
+          {{#if data.admin_guide}}
+          <p><b>工作推进方法说明:</b>
+            {{{data.admin_guide}}}
+          </p>
+          {{/if}}
+        </div>
+      </div>
+      <!-- /.widget-ticket_template -->
+    </div>
+  </div>
+</section>
+<!-- /.section -->
+{{#extend 'scripts'}}
+  <script>
+    (function($) {
+      // Delete ticket_template button
+    var uri;
+    $('.btn-danger.delete').click(function(){
+      uri = $(this).attr('data-href');
+    });
+    $('.btn-danger.delete').confirmation({
+      animation: true,
+      placement: "left",
+      title: "确定要删除此数据吗?",
+      btnOkLabel: '确定',
+      btnCancelLabel: '取消',
+      onConfirm: function (event) {
+        event.preventDefault();
+        $.post(uri, function(response) {
+            window.location.href = '/crud/ticket_templates';
+        });
+      },
+  });
+    })(jQuery)
+  </script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}

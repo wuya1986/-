@@ -1,0 +1,220 @@
+<div class="form-group form">
+  <label class="col-sm-3 control-label">施工类别</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="completed_acceptance_checks_type" name="form_data[completed_acceptance_checks_type]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}>
+      <option value="租户装修">租户装修</option>
+      <option value="项目委托施工">项目委托施工</option>
+      <option value="外部单位项目内施工">外部单位项目内施工</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">施工位置</label>
+  <div class="col-sm-4">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[completed_acceptance_checks_floor]" value="{{data.form_data.completed_acceptance_checks_floor}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+      <span class="input-group-addon">层</span>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[completed_acceptance_checks_number]" value="{{data.form_data.completed_acceptance_checks_number}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+      <span class="input-group-addon">号</span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label"></label>
+  <div class="col-sm-9">
+    <div class="input-group">
+      <input type="text" class="form-control text-right" name="form_data[completed_acceptance_checks_area]" value="{{data.form_data.completed_acceptance_checks_area}}" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+      {{else}}
+      disabled
+      {{/if}}/>
+      <span class="input-group-addon">区域</span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户/安排施工单位名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_tenantry_unit_name]"  value="{{data.form_data.completed_acceptance_checks_tenantry_unit_name}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_tenantry_contact]" value="{{data.form_data.completed_acceptance_checks_tenantry_contact}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系电话</label>
+  <div class="col-sm-9">
+    <input type="tel" class="form-control" name="form_data[completed_acceptance_checks_tenantry_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.completed_acceptance_checks_tenantry_tel}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">施工单位名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_construction_unit_name]"  value="{{data.form_data.completed_acceptance_checks_construction_unit_name}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系人</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_construction_contact]" value="{{data.form_data.completed_acceptance_checks_construction_contact}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">联系电话</label>
+  <div class="col-sm-9">
+    <input type="tel" class="form-control" name="form_data[completed_acceptance_checks_construction_tel]"  pattern="^1\d{10}$" oninput="setCustomValidity('')" oninvalid="setCustomValidity('请输入数字')"  value="{{data.form_data.completed_acceptance_checks_construction_tel}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}/>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">初步验收结论</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="completed_acceptance_checks_result" name="form_data[completed_acceptance_checks_result]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理初检') (eq data.progress '安保经理初检')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}
+    >
+      <option value="未验收">未验收</option>
+      <option value="验收合格">验收合格</option>
+      <option value="待整改后复验">待整改后复验</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">待整改项</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="form_data[completed_acceptance_checks_rectification_items]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理初检') (eq data.progress '安保经理初检')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}
+    >{{data.form_data.completed_acceptance_checks_rectification_items}}</textarea>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_repair_manager]" {{#if (and (eq data.progress '工程经理初检') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} value="{{#if data.form_data.completed_acceptance_checks_repair_manager}}{{data.form_data.completed_acceptance_checks_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_repair_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_security_manager]" {{#if (and (eq data.progress '安保经理初检') (intersection @root.session.user.acl_roles '["security_manager"]'))}} value="{{#if data.form_data.completed_acceptance_checks_security_manager}}{{data.form_data.completed_acceptance_checks_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_security_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">项目总经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_chief_manager]" {{#if (and (eq data.progress '初检确认') (intersection @root.session.user.acl_roles '["chief_manager"]'))}}
+    value="{{#if data.form_data.completed_acceptance_checks_chief_manager}}{{data.form_data.completed_acceptance_checks_chief_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_chief_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">复检结论</label>
+  <div class="col-sm-9">
+    <select class="form-control" id="completed_acceptance_checks_retest_result" name="form_data[completed_acceptance_checks_retest_result]"  required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (or (eq data.progress '工程经理复检') (eq data.progress '安保经理复检')) (intersection @root.session.user.acl_roles '["repair_manager", "security_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}>
+      <option value="未验收">未验收</option>
+      <option value="验收合格">验收合格</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_retest_repair_manager]" {{#if (and (eq data.progress '工程经理复检') (intersection @root.session.user.acl_roles '["repair_manager"]'))}} value="{{#if data.form_data.completed_acceptance_checks_retest_repair_manager}}{{data.form_data.completed_acceptance_checks_retest_repair_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_retest_repair_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_retest_security_manager]" {{#if (and (eq data.progress '安保经理复检') (intersection @root.session.user.acl_roles '["security_manager"]'))}} value="{{#if data.form_data.completed_acceptance_checks_retest_security_manager}}{{data.form_data.completed_acceptance_checks_retest_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_retest_security_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">项目总经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[completed_acceptance_checks_retest_chief_manager]" {{#if (and (eq data.progress '复检确认') (intersection @root.session.user.acl_roles '["chief_manager"]'))}}
+    value="{{#if data.form_data.completed_acceptance_checks_retest_chief_manager}}{{data.form_data.completed_acceptance_checks_retest_chief_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.completed_acceptance_checks_retest_chief_manager}}"
+    disabled
+    {{/if}} />
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $("#completed_acceptance_checks_type").val('{{data.form_data.completed_acceptance_checks_type}}');
+   $("#completed_acceptance_checks_result").val('{{data.form_data.completed_acceptance_checks_result}}');
+   $("#completed_acceptance_checks_retest_result").val('{{data.form_data.completed_acceptance_checks_retest_result}}');
+ });
+</script>
+{{/extend}}

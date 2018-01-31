@@ -1,0 +1,344 @@
+<h4>
+  基本信息
+</h4>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">租户名称</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_unit_name]" value="{{data.form_data.settle_in_unit_name}}" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+    {{else}}
+    disabled
+    {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">施工位置</label>
+  <div class="col-sm-4">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[settle_in_floor]" value="{{data.form_data.settle_in_floor}}" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+             {{else}}
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon">层</span>
+    </div>
+  </div>
+  <div class="col-sm-5">
+    <div class="input-group">
+      <input type="number" pattern="[0-9]*" class="form-control text-right" name="form_data[settle_in_number]" value="{{data.form_data.settle_in_number}}" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '已受理') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+             {{else}}
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon">号</span>
+    </div>
+  </div>
+</div>
+<h4>
+  运营服务部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">租户入住/变更通知表</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_service_type" name="form_data[settle_in_service_type]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">消防、安全、合规责任承诺书</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_service_commitment" name="form_data[settle_in_service_commitment]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">入住企业资料表</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_service_sheet" name="form_data[settle_in_service_sheet]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">大件物品进/出门条确认人签字模板</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_service_template" name="form_data[settle_in_service_template]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">运营经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_service_manager]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+           value="{{#if data.form_data.settle_in_service_manager}}{{data.form_data.settle_in_service_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.settle_in_service_manager}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">运营经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[settle_in_service_manager_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营部审批') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+             value="{{#if data.form_data.settle_in_service_manager_date}}{{ymd data.form_data.settle_in_service_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.settle_in_service_manager_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<h4>
+  工程部
+</h4>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">施工竣工验收表</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_project_acceptance" name="form_data[settle_in_project_acceptance]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程部审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">竣工图</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_project_drawing" name="form_data[settle_in_project_drawing]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程部审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">其他</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_project_other]"  value="{{data.form_data.settle_in_project_other}}"
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程部审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+           {{else}}
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_project_manager]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程部审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+           value="{{#if data.form_data.settle_in_project_manager}}{{data.form_data.settle_in_project_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.settle_in_project_manager}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">工程部经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[settle_in_project_manager_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '工程部审批') (intersection @root.session.user.acl_roles '["repair_manager"]')))}}
+             value="{{#if data.form_data.settle_in_project_manager_date}}{{ymd data.form_data.settle_in_project_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.settle_in_project_manager_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<h4>
+  安保
+</h4>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">已取得《北京市丰台区公安消防支队建设工程消防验收意见书》</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_security_submissions" name="form_data[settle_in_security_submissions]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未取得</option>
+      <option value="已取得">已取得</option>
+      <option value="无需取得">无需取得</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">现场检查无安全隐患、外开窗已封闭</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_security_security" name="form_data[settle_in_security_security]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-7 control-label">现场灭火器等消防器具配置完善</label>
+  <div class="col-sm-5">
+    <select class="form-control" id="settle_in_security_fire_apparatus" name="form_data[settle_in_security_fire_apparatus]" required
+            {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+            {{else}}
+            disabled
+            {{/if}}
+    >
+      <option value="未确认">未确认</option>
+      <option value="确认">确认</option>
+    </select>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">其他</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_security_other]"  value="{{data.form_data.settle_in_security_other}}"
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+           {{else}}
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_security_manager]" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+           value="{{#if data.form_data.settle_in_security_manager}}{{data.form_data.settle_in_security_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+           {{else}}
+           value="{{data.form_data.settle_in_security_manager}}"
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">安保部经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[settle_in_security_manager_date]" required
+             {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '安保部审批') (intersection @root.session.user.acl_roles '["security_manager"]')))}}
+             value="{{#if data.form_data.settle_in_security_manager_date}}{{ymd data.form_data.settle_in_security_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+             {{else}}
+             value="{{ymd data.form_data.settle_in_security_manager_date 'YYYY-MM-DD'}}"
+             disabled
+             {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">项目总经理</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_general_manager]" required
+    {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '项目总经理审批') (intersection @root.session.user.acl_roles '["chief_manager"]')))}}
+    value="{{#if data.form_data.settle_in_general_manager}}{{data.form_data.settle_in_general_manager}}{{else}}{{@root.session.user.fullname}}{{/if}}"
+    {{else}}
+    value="{{data.form_data.settle_in_general_manager}}"
+    disabled
+    {{/if}}
+    />
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">项目总经理确认日期</label>
+  <div class="col-sm-9">
+    <div class="input-group date">
+      <input type="text" class="form-control" name="form_data[settle_in_general_manager_date]" required
+      {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '项目总经理审批') (intersection @root.session.user.acl_roles '["chief_manager"]')))}}
+       value="{{#if data.form_data.settle_in_general_manager_date}}{{ymd data.form_data.settle_in_general_manager_date 'YYYY-MM-DD'}}{{else}}{{now 'YYYY-MM-DD'}}{{/if}}"
+       {{else}}
+       value="{{ymd data.form_data.settle_in_general_manager_date 'YYYY-MM-DD'}}"
+       disabled
+       {{/if}}
+      />
+      <span class="input-group-addon"><i class="fa fa-th"></i></span>
+    </div>
+  </div>
+</div>
+<div class="form-group form">
+  <label class="col-sm-3 control-label">增值服务意见</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="form_data[settle_in_value_add_service_advice]"  value="{{data.form_data.settle_in_value_add_service_advice}}" required
+           {{#if (or (intersection @root.session.user.acl_roles '["ticket_manager"]') (and  (eq data.progress '运营服务经理增值意见') (intersection @root.session.user.acl_roles '["building_manager"]')))}}
+           {{else}}
+           disabled
+           {{/if}}
+    />
+  </div>
+</div>
+{{#extend 'scripts'}}
+<script>
+ $(function() {
+   $('.input-group.date').datepicker({
+     language: "zh-CN",
+     format: "yyyy-mm-dd"
+   });
+   $("#settle_in_service_type").val('{{data.form_data.settle_in_service_type}}');
+   $("#settle_in_service_commitment").val('{{data.form_data.settle_in_service_commitment}}');
+   $("#settle_in_service_sheet").val('{{data.form_data.settle_in_service_sheet}}');
+   $("#settle_in_service_template").val('{{data.form_data.settle_in_service_template}}');
+   $("#settle_in_project_acceptance").val('{{data.form_data.settle_in_project_acceptance}}');
+   $("#settle_in_project_drawing").val('{{data.form_data.settle_in_project_drawing}}');
+   $("#settle_in_project_other").val('{{data.form_data.settle_in_project_other}}');
+   $("#settle_in_security_submissions").val('{{data.form_data.settle_in_security_submissions}}');
+   $("#settle_in_security_security").val('{{data.form_data.settle_in_security_security}}');
+   $("#settle_in_security_fire_apparatus").val('{{data.form_data.settle_in_security_fire_apparatus}}');
+ });
+</script>
+{{/extend}}

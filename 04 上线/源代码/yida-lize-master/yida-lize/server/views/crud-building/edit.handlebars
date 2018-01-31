@@ -1,0 +1,78 @@
+{{#if (isAllowed @root.session.permissions 'building' 'edit')}}
+<section class="content-header">
+  <h1>
+    编辑建筑信息
+    <small>编辑建筑信息</small>
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="{{{url 'dashboard.index'}}}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="{{{url 'building.list'}}}">List</a></li>
+    <li class="active">编辑建筑信息</li>
+  </ol>
+</section>
+<section class="content">
+  <div class="row">
+    <div class="col-md-6">
+      {{#if message}}
+      <div class="alert alert-info alert-dismissable" style="width:600px" >
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{{message}}}
+      </div>
+      {{/if}}
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title">建筑信息</h3>
+        </div>
+        <!-- form -->
+        <form action="/crud/building/{{data._id}}?_method=put" method="post">
+          <div class="box-body">
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">建筑名<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="building[building_name]" value="{{data.building_name}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">地址<span class="required_input">*</span></label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="building[building_address]" value="{{data.building_address}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">经度<span class="required_input">*</span></label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="building[loc_lng]" value="{{data.loc.[1]}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">纬度<span class="required_input">*</span></label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="building[loc_lat]" value="{{data.loc.[0]}}" required/>
+              </div>
+            </div>
+            <div class="form-group form">
+              <label class="col-sm-3 control-label">描述</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="building[memo]">{{data.memo}}</textarea>
+              </div>
+            </div>
+          </div>
+          <div class="box-footer">
+            <button type="submit" class="btn btn-primary" id="btn_save" ><i id="i_save" class="fa fa-floppy-o"></i> 保存</button>
+            <button type="button" class="btn btn-default" onclick="location.href = '{{{url "building.list"}}}'">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{{#extend 'scripts'}}
+<script>
+  $('form').on('submit', function () {
+      $("#i_save").addClass("fa-spin");
+  });
+</script>
+{{/extend}}
+{{else}}
+您还没有此功能的访问权限
+{{/if}}
